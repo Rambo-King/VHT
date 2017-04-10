@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\admin\models\AddressLibrary */
+/* @var $model app\models\AddressLibrary */
 
 $this->title = 'Update Address Library: ' . $model->Address_Library_Id;
 $this->params['breadcrumbs'][] = ['label' => 'Address Libraries', 'url' => ['index']];

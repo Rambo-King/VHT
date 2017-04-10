@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\admin\models\AddressLibrary */
+/* @var $model app\models\AddressLibrary */
 
 $this->title = $model->Address_Library_Id;
 $this->params['breadcrumbs'][] = ['label' => 'Address Libraries', 'url' => ['index']];

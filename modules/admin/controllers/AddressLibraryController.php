@@ -3,8 +3,8 @@
 namespace app\modules\admin\controllers;
 
 use Yii;
-use app\modules\admin\models\AddressLibrary;
-use app\modules\admin\models\AddressLibrarySearch;
+use app\models\AddressLibrary;
+use app\models\AddressLibrarySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\admin\models\AddressLibrary */
+/* @var $model app\models\AddressLibrary */
 
 $this->title = 'Create Address Library';
 $this->params['breadcrumbs'][] = ['label' => 'Address Libraries', 'url' => ['index']];
