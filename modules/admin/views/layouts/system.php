@@ -1,23 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 16-11-11
- * Time: 下午3:08
- */
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use yii\helpers\Html;
 use app\modules\admin\assets\SystemAsset;
+use yii\widgets\Breadcrumbs;
 SystemAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
     <head>
-        <title>我连之家数据管理后台</title>
+        <title>VHT Data Management</title>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <?= Html::csrfMetaTags() ?>
@@ -30,7 +21,7 @@ SystemAsset::register($this);
     <body class="skin-blue">
     <?php $this->beginBody() ?>
     <header class="header">
-        <a href="index.html" class="logo">我连之家数据管理后台</a>
+        <a href="index.html" class="logo">VHT Data Management</a>
         <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -97,20 +88,10 @@ SystemAsset::register($this);
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
-                <!-- search form -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                    </div>
-                </form>
-                <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
                     <li class="active">
-                        <a href="index.html">
+                        <a href="/admin">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                         </a>
                     </li>
@@ -127,6 +108,11 @@ SystemAsset::register($this);
                         </ul>
                     </li>
 
+                    <li>
+                        <a href="<?= \yii\helpers\Url::to(['/admin/address-library']) ?>">
+                            <i class="fa fa-cloud"></i> <span>Address Library</span><small class="badge pull-right bg-green">source</small>
+                        </a>
+                    </li>
 
                     <li>
                         <a href="pages/widgets.html">
@@ -214,16 +200,11 @@ SystemAsset::register($this);
 
         <!-- Right side column. Contains the navbar and content of the page -->
         <aside class="right-side">
-            <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    Blank page
-                    <small>Control panel</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Blank page</li>
-                </ol>
+                <?= Breadcrumbs::widget([
+                    'homeLink'=>['label' => ' Dashboard','url' => '/admin', 'target'=>'_top', 'class' => 'fa fa-dashboard'],
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
             </section>
 
             <!-- Main content -->
