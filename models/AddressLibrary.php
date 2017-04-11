@@ -3,11 +3,13 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%address_library}}".
  *
  * @property integer $Address_Library_Id
+ * @property integer $Network_Id
  * @property string $ISO
  * @property string $Country
  * @property string $Language
@@ -48,7 +50,7 @@ class AddressLibrary extends \yii\db\ActiveRecord
     {
         return [
             [['ISO', 'Country'], 'required'],
-            [['ID', 'Elevation'], 'integer'],
+            [['ID', 'Elevation', 'Network_Id'], 'integer'],
             [['Latitude', 'Longitude'], 'number'],
             [['ISO', 'Language'], 'string', 'max' => 2],
             [['Country'], 'string', 'max' => 50],
@@ -68,6 +70,7 @@ class AddressLibrary extends \yii\db\ActiveRecord
     {
         return [
             'Address_Library_Id' => 'Primary',
+            'Network_Id' => 'Network',
             'ISO' => 'Iso',
             'Country' => 'Country',
             'Language' => 'Language',
@@ -92,4 +95,20 @@ class AddressLibrary extends \yii\db\ActiveRecord
             'DST' => 'Dst',
         ];
     }
+
+    public static function CountryList(){
+        $rows = self::find(['Country'])->groupBy('Country')->all();
+        return ArrayHelper::map($rows, 'Country', 'Country');
+    }
+
+    public static function Region1List($country){
+        $rows = self::find(['Region1'])->where(['Country' => $country])->groupBy('Region1')->all();
+        return ArrayHelper::map($rows, 'Region1', 'Region1');
+    }
+
+    public static function CodeList($country, $region1){
+        $rows = self::find()->where(['Country' => $country, 'Region1' => $region1])->all();
+        return ArrayHelper::map($rows, 'Region1', 'Region1'.'Region2');
+    }
+
 }

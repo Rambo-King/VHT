@@ -18,7 +18,7 @@ class AddressLibrarySearch extends AddressLibrary
     public function rules()
     {
         return [
-            [['Address_Library_Id', 'ID', 'Elevation'], 'integer'],
+            [['Address_Library_Id', 'Network_Id', 'ID', 'Elevation'], 'integer'],
             [['ISO', 'Country', 'Language', 'Region1', 'Region2', 'Region3', 'Region4', 'Locality', 'Postcode', 'Suburb', 'ISO2', 'FIPS', 'NUTS', 'HASC', 'STAT', 'Timezone', 'UTC', 'DST'], 'safe'],
             [['Latitude', 'Longitude'], 'number'],
         ];
@@ -61,6 +61,7 @@ class AddressLibrarySearch extends AddressLibrary
         // grid filtering conditions
         $query->andFilterWhere([
             'Address_Library_Id' => $this->Address_Library_Id,
+            'Network_Id' => $this->Network_Id,
             'ID' => $this->ID,
             'Latitude' => $this->Latitude,
             'Longitude' => $this->Longitude,

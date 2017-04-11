@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => \yii\grid\CheckboxColumn::className()],
 
             'Address_Library_Id',
+            'Network_Id',
             'ISO',
             'Country',
             'Postcode',
