@@ -18,10 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            [
-                'class' => \yii\grid\CheckboxColumn::className(),
-                'headerOptions' => ['width' => '30']
-            ],
+            ['class' => \yii\grid\CheckboxColumn::className()],
 
             'Address_Library_Id',
             'ISO',
