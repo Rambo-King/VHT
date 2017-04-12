@@ -12,6 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="network-index">
 
+    <?php
+    if(Yii::$app->session->hasFlash('success')){
+        echo '<div class="alert alert-success">'.Yii::$app->session->getFlash('success').'</div>';
+    }
+    ?>
+
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
@@ -38,16 +44,38 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{update} {delete} {area}',
                 'buttons' => [
                     'update' => function($url, $model, $key){
-                            return Html::a("Modify", \yii\helpers\Url::to([$url, 'id' => "$key"]), ["class" => "btn btn-primary"]);
+                            return Html::a("Modify", \yii\helpers\Url::to($url), ["class" => "btn btn-primary"]);
                         },
                     'delete' => function($url, $model, $key){
-                            return '<a data-id="'.$key.'" onclick="DeleteConfirm(this);" href="javascript:;" class="btn btn-warning">Delete</a>';
+                            return '<a data-id="'.$key.'" onclick="DeleteConfirm(this);" href="javascript:;" class="btn btn-danger">Delete</a>';
                         },
                     'area' => function($url, $model, $key){
-                            return Html::a("Area", \yii\helpers\Url::to(['', 'id' => "$key"]), ["class" => "btn btn-success"]);
+                            return Html::a("Area", \yii\helpers\Url::to(['/admin/network-area/index', 'id' => "$key"]), ["class" => "btn btn-success"]);
                         }
                 ],
             ],
         ],
     ]); ?>
 </div>
+
+<script type="text/javascript">
+    function DeleteConfirm(obj){
+        layer.open({
+            skin: 'layui-layer-lan',
+            shift: 1,
+            title:'温馨提示',
+            content:'删除后不可恢复 请谨慎操作?',
+            btn:['确定', '取消'],
+            yes:function(){
+                $.post('/admin/network/ajax-delete', {'id':obj.getAttribute('data-id')}, function(bool){
+                    if(bool){
+                        window.location.href = '/admin/network';
+                    }
+                });
+            },
+            no:function(index){
+                layer.close(index);
+            }
+        });
+    }
+</script>

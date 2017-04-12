@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
 
         <div class="form-group">
             <div class="col-xs-1 col-xs-offset-1">

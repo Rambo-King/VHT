@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%network}}".
@@ -18,6 +19,10 @@ use yii\db\ActiveRecord;
  */
 class Network extends ActiveRecord
 {
+    public $country;
+    public $region1;
+    public $areas;
+
     public function behaviors(){
         return [
             'timestamp' => [
@@ -44,6 +49,7 @@ class Network extends ActiveRecord
     {
         return [
             [['name', 'created_by'], 'required'],
+            [['country', 'region1', 'areas'], 'required', 'on' => 'create'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 32],
@@ -63,6 +69,19 @@ class Network extends ActiveRecord
             'updated_at' => 'Modify Date',
             'created_by' => 'Creator',
             'updated_by' => 'Modifier',
+            'country' => 'Country',
+            'region1' => 'Region1',
+            'areas' => 'Jurisdiction Areas',
         ];
+    }
+
+    public static function NetworkList(){
+        $rows = self::find()->all();
+        return ArrayHelper::map($rows, 'network_id', 'name');
+    }
+
+    public static function GetNameById($id){
+        $row = self::find()->where(['network_id' => $id])->one();
+        return $row ? $row->name : null;
     }
 }

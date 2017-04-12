@@ -3,6 +3,9 @@ use yii\helpers\Html;
 use app\modules\admin\assets\SystemAsset;
 use yii\widgets\Breadcrumbs;
 SystemAsset::register($this);
+
+$controller = Yii::$app->controller->id;
+$action = Yii::$app->controller->action->id;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -103,13 +106,13 @@ SystemAsset::register($this);
                         </a>
                     </li>
 
-                    <li class="treeview">
+                    <li class="treeview <?= in_array($controller, ['network', 'network-area']) ? 'active' : '' ?>">
                         <a href="#">
                             <i class="fa fa-sitemap"></i> <span>Network</span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="<?= \yii\helpers\Url::to(['/admin/network'])?>"><i class="fa fa-angle-double-right"></i> Network</a></li>
-                            <li><a href="<?= \yii\helpers\Url::to(['/admin/network-area'])?>"><i class="fa fa-angle-double-right"></i> Jurisdiction Area</a></li>
+                            <li <?= $controller=='network' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/network'])?>"><i class="fa fa-angle-double-right"></i> Network</a></li>
+                            <li <?= $controller=='network-area' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/network-area'])?>"><i class="fa fa-angle-double-right"></i> Jurisdiction Area</a></li>
                         </ul>
                     </li>
 

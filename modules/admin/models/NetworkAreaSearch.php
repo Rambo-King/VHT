@@ -18,8 +18,8 @@ class NetworkAreaSearch extends NetworkArea
     public function rules()
     {
         return [
-            [['network_area_id', 'network_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['country', 'code', 'address_string'], 'safe'],
+            [['network_area_id', 'network_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'address_library_id'], 'integer'],
+            [['address'], 'safe'],
         ];
     }
 
@@ -61,15 +61,14 @@ class NetworkAreaSearch extends NetworkArea
         $query->andFilterWhere([
             'network_area_id' => $this->network_area_id,
             'network_id' => $this->network_id,
+            'address_library_id' => $this->address_library_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'country', $this->country])
-            ->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'address_string', $this->address_string]);
+        $query->andFilterWhere(['like', 'address', $this->address]);
 
         return $dataProvider;
     }

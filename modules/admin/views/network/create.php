@@ -22,17 +22,30 @@ $this->params['breadcrumbs'][] = $this->title;
                 'enctype' => 'multipart/form-data',
             ],
             'fieldConfig' => [
-                'template' => '{label}<div class="col-xs-6">{input}</div><div class="col-xs-3">{error}</div>',
-                'labelOptions' => ['class' => 'col-xs-1 control-label'],
+                'template' => '{label}<div class="col-xs-6">{input}</div><div class="col-xs-2">{error}</div>',
+                'labelOptions' => ['class' => 'col-xs-2 control-label'],
             ],
         ]); ?>
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+        <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
+
+        <?= $form->field($model, 'country')->widget(kartik\select2\Select2::className(), [
+            'data' => \app\models\AddressLibrary::CountryList(),
+            'options' => ['placeholder' => 'Select a Country ...']
+        ]) ?>
+
+        <?= $form->field($model, 'region1')->widget(kartik\select2\Select2::className(), [
+            'options' => ['placeholder' => 'Select a Region1 ...']
+        ]) ?>
+
+        <?= $form->field($model, 'areas')->widget(kartik\select2\Select2::className(), [
+            'options' => ['placeholder' => 'Select Areas ...', 'multiple' => true]
+        ]) ?>
 
         <div class="form-group">
-            <div class="col-xs-1 col-xs-offset-1">
+            <div class="col-xs-2 col-xs-offset-2">
                 <?= Html::submitButton('Create', ['class' => 'btn btn-success']) ?>
             </div>
         </div>
@@ -42,3 +55,21 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
 </div>
+<?php
+$script = <<<JS
+    $('#network-country').change(function(){
+        var country = $(this).val();
+        $.post('/admin/network/get-region', {'country':country}, function(html){
+            $('#network-region1').html('').append(html);
+        });
+    });
+    $('#network-region1').change(function(){
+        var country = $('#network-country').val();
+        var region1 = $(this).val();
+        $.post('/admin/network/get-code', {'country':country, 'region1':region1}, function(html){
+            $('#network-areas').html('').append(html);
+        });
+    });
+JS;
+$this->registerJs($script);
+?>
