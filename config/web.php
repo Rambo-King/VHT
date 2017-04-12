@@ -26,8 +26,12 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'class' => 'yii\web\User',
+            'identityClass' => 'app\models\Member',
             'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_memberIdentity', 'httpOnly' => true],
+            'idParam' => '_memberId',
+            'loginUrl' => ['member/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
