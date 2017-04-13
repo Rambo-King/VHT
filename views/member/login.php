@@ -2,14 +2,14 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Member Register';
+$this->title = 'Member Login';
 ?>
 
-<div class="member-register">
+<div class="member-login">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="member-register-form">
+    <div class="member-login-form">
 
         <?php $form = ActiveForm::begin([
             'options' => [
@@ -24,12 +24,10 @@ $this->title = 'Member Register';
 
         <?= $form->field($model, 'email')->textInput() ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
-        <?= $form->field($model, 'password2')->passwordInput() ?>
-        <?= $form->field($model, 'number')->textInput() ?>
 
         <div class="form-group">
             <div class="col-xs-2 col-xs-offset-2">
-                <?= Html::submitButton('Register', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Login', ['class' => 'btn btn-success']) ?>
             </div>
         </div>
 

@@ -23,12 +23,6 @@ use yii\web\IdentityInterface;
  */
 class Member extends ActiveRecord implements IdentityInterface
 {
-    /* @return string 当前用户的（cookie）认证密钥
-     */
-    public function getAuthKey(){
-        return $this->auth_key;
-    }
-
     /*
      * 根据 token 查询身份。
      * @param string $token 被查询的 token
@@ -53,6 +47,12 @@ class Member extends ActiveRecord implements IdentityInterface
         return $this->member_id;
     }
 
+    /* @return string 当前用户的（cookie）认证密钥
+     */
+    public function getAuthKey(){
+        return $this->auth_key;
+    }
+
     /*
      * @param string $authKey
      * @return boolean if auth key is valid for current user
@@ -65,8 +65,30 @@ class Member extends ActiveRecord implements IdentityInterface
         $this->password = Yii::$app->security->generatePasswordHash($password); //使用yii2自带hash加密
     }
 
+    public function validatePassword($password){
+        return Yii::$app->security->validatePassword($password, $this->password);
+    }
+
     public function generateAuthKey() {
         $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    /*
+    * 根据 用户名 查询身份。
+    * @return IdentityInterface
+    */
+    public static function findByEmailOrNumber($emailOrNumber){
+        $pattern = '/^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/';
+        // '^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*$'  '\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*'
+        $temp = ['account_number' => $emailOrNumber];
+        if(preg_match($pattern, $emailOrNumber)){
+            $temp = ['email' => $emailOrNumber];
+        }
+        $member = Member::find()->where($temp)->asArray()->one();
+        if ($member) {
+            return new static($member);
+        }
+        return null;
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\models\MemberLoginForm;
 use app\models\MemberRegisterForm;
 use Yii;
 use yii\web\Controller;
@@ -30,7 +31,12 @@ class MemberController extends Controller{
     }
 
     public function actionLogin(){
-        echo 'login page';
+        $model = new MemberLoginForm();
+        if($model->load(Yii::$app->request->post()) && $model->login()){
+            return $this->goHome();
+        }else{
+            return $this->render('login', ['model' => $model]);
+        }
     }
 
     public function actionLogout(){
