@@ -35,8 +35,7 @@ class NetworkController extends Controller
      * Lists all Network models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex(){
         $searchModel = new NetworkSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -98,6 +97,7 @@ class NetworkController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post())) {
             $model->updated_by = 2;

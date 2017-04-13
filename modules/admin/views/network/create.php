@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]); ?>
 
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'name')->textInput() ?>
 
         <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
 

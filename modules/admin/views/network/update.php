@@ -8,7 +8,6 @@ use yii\widgets\ActiveForm;
 
 $this->title = 'Update Network: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Networks', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->network_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="network-update">

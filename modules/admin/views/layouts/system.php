@@ -24,7 +24,7 @@ $action = Yii::$app->controller->action->id;
     <body class="skin-blue">
     <?php $this->beginBody() ?>
     <header class="header">
-        <a href="index.html" class="logo">VHT Data Management</a>
+        <a href="/admin" class="logo">VHT Data Management</a>
         <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>

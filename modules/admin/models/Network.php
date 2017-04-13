@@ -42,14 +42,21 @@ class Network extends ActiveRecord
         return '{{%network}}';
     }
 
+    public function scenarios(){
+        $parentScenarios = parent::scenarios();
+        $selfScenarios = [
+            'create' => ['name', 'description', 'created_by', 'country', 'region1', 'areas'],
+            'update' => ['name', 'description', 'updated_by'],
+        ];
+        return array_merge($parentScenarios, $selfScenarios);
+    }
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules(){
         return [
-            [['name', 'created_by'], 'required'],
-            [['country', 'region1', 'areas'], 'required', 'on' => 'create'],
+            [['name', 'country', 'region1', 'areas', 'created_by', 'updated_by'], 'required'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 32],
