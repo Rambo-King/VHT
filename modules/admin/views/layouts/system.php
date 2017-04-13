@@ -117,6 +117,12 @@ $action = Yii::$app->controller->action->id;
                     </li>
 
                     <li>
+                        <a href="<?= \yii\helpers\Url::to(['/admin/member']) ?>">
+                            <i class="fa fa-user"></i> <span>Member</span><small class="badge pull-right bg-green">Member</small>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="pages/calendar.html">
                             <i class="fa fa-calendar"></i> <span>Calendar</span>
                             <small class="badge pull-right bg-red">3</small>

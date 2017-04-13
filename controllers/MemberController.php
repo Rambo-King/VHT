@@ -6,11 +6,28 @@ use app\models\MemberRegisterForm;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 class MemberController extends Controller{
 
     public function behaviors(){
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'user' => 'user',
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['register', 'login'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
