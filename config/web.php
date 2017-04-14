@@ -1,11 +1,11 @@
 <?php
-
+//Yii::setAlias('@common', dirname(__DIR__) . '/common');
 $params = require(__DIR__ . '/params.php');
 
 $config = [
     'timeZone'=>'Asia/Chongqing',
     'language' =>'en', //zh-CN
-    'id' => 'wlHome',
+    'id' => 'vht',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
