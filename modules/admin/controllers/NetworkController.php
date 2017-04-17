@@ -62,15 +62,15 @@ class NetworkController extends Controller
                 $data = Yii::$app->request->post('Network');
                 foreach($data['areas'] as $aid){
                     $naModel = clone $networkAreaModel;
-                    $m = AddressLibrary::find()->where(['Address_Library_Id' => $aid])->one();
                     $attributes = [
                         'network_id' => $model->primaryKey,
                         'address_library_id' => $aid,
-                        'address' => $m->Country.' '.$m->Region1.' '.$m->Region2.' '.$m->Region3.' '.$m->Region4.' '.$m->Locality.' '.$m->Postcode,
+                        'address' => AddressLibrary::AddressString($aid),
                         'created_by' => 1, //Yii session data
                     ];
                     $naModel->setAttributes($attributes);
                     if($naModel->save()){
+                        $m = AddressLibrary::find()->where(['Address_Library_Id' => $aid])->one();
                         $m->Network_Id = $model->primaryKey;
                         $m->save();
                     }else{

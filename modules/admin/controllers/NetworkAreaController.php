@@ -61,15 +61,15 @@ class NetworkAreaController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $data = Yii::$app->request->post('NetworkArea');
-            $m = AddressLibrary::find()->where(['Address_Library_Id' => $data['areas']])->one();
             $attributes = [
                 'network_name' => Network::GetNameById($model->network_id),
                 'address_library_id' => $data['areas'],
-                'address' => $m->Country.' '.$m->Region1.' '.$m->Region2.' '.$m->Region3.' '.$m->Region4.' '.$m->Locality.' '.$m->Postcode,
+                'address' => AddressLibrary::AddressString($data['areas']),
                 'created_by' => 1, //Yii session data
             ];
             $model->setAttributes($attributes);
             if($model->save()){
+                $m = AddressLibrary::find()->where(['Address_Library_Id' => $data['areas']])->one();
                 $m->Network_Id = $model->network_id;
                 $m->save();
             }else{
@@ -93,15 +93,15 @@ class NetworkAreaController extends Controller
             $data = Yii::$app->request->post('NetworkArea');
             foreach($data['areas'] as $aid){
                 $naModel = clone $model;
-                $m = AddressLibrary::find()->where(['Address_Library_Id' => $aid])->one();
                 $attributes = [
                     'network_name' => Network::GetNameById($model->network_id),
                     'address_library_id' => $aid,
-                    'address' => $m->Country.' '.$m->Region1.' '.$m->Region2.' '.$m->Region3.' '.$m->Region4.' '.$m->Locality.' '.$m->Postcode,
+                    'address' => AddressLibrary::AddressString($aid),
                     'created_by' => 1, //Yii session data
                 ];
                 $naModel->setAttributes($attributes);
                 if($naModel->save()){
+                    $m = AddressLibrary::find()->where(['Address_Library_Id' => $aid])->one();
                     $m->Network_Id = $model->network_id;
                     $m->save();
                 }else{
@@ -178,8 +178,7 @@ class NetworkAreaController extends Controller
     }
 
     public function actionGetCode(){
-        $networkId = Yii::$app->request->post('networkId');
-        $records = NetworkArea::GetCodesByNetworkId($networkId);
+        $records = NetworkArea::GetCodes();
         $country = Yii::$app->request->post('country');
         $region1 = Yii::$app->request->post('region1');
         $codes = AddressLibrary::find()->where(['Country' => $country, 'Region1' => $region1])->all();

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -129,8 +130,13 @@ class Member extends ActiveRecord implements IdentityInterface
             'access_token' => 'Access Token',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
+            'created_by' => 'Creator',
+            'updated_by' => 'Modifier',
         ];
+    }
+
+    public static function MemberList(){
+        $rows = self::find()->all();
+        return ArrayHelper::map($rows, 'member_id', 'email');
     }
 }

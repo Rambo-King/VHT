@@ -121,4 +121,13 @@ class AddressLibrary extends \yii\db\ActiveRecord
         //return ArrayHelper::map($rows, 'Address_Library_Id', 'Postcode');
     }
 
+    public static function AddressString($id){
+        $m = self::find()->where(['Address_Library_Id' => $id])->one();
+        return $m->Country.' '.$m->Region1.' '
+        .($m->Region2 ? $m->Region2.' ' : null)
+        .($m->Region3 ? $m->Region3.' ' : null)
+        .($m->Region4 ? $m->Region4.' ' : null)
+        .$m->Locality.' '.$m->Postcode;
+    }
+
 }

@@ -116,6 +116,16 @@ $action = Yii::$app->controller->action->id;
                         </ul>
                     </li>
 
+                    <li class="treeview <?= in_array($controller, ['member', 'address-book']) ? 'active' : '' ?>">
+                        <a href="#">
+                            <i class="fa fa-user"></i> <span>Member</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li <?= $controller=='member' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/member'])?>"><i class="fa fa-angle-double-right"></i> Member</a></li>
+                            <li <?= $controller=='address-book' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/address-book'])?>"><i class="fa fa-angle-double-right"></i> Address Book</a></li>
+                        </ul>
+                    </li>
+
                     <li>
                         <a href="<?= \yii\helpers\Url::to(['/admin/member']) ?>">
                             <i class="fa fa-user"></i> <span>Member</span>

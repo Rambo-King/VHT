@@ -60,19 +60,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $script = <<<JS
     $('#networkarea-country').change(function(){
-        if($('#networkarea-network_id').val() == ''){
-            $('#networkarea-network_id').parent().siblings('.col-xs-3').find('.help-block').html('Please Select a Network').css({'color':'#a94442'})
-        }
         var country = $(this).val();
         $.post('/admin/network/get-region', {'country':country}, function(html){
             $('#networkarea-region1').html('').append(html);
         });
     });
     $('#networkarea-region1').change(function(){
-        var network = $('#networkarea-network_id').val();
         var country = $('#networkarea-country').val();
         var region1 = $(this).val();
-        $.post('/admin/network-area/get-code', {'networkId':network, 'country':country, 'region1':region1}, function(html){
+        $.post('/admin/network-area/get-code', {'country':country, 'region1':region1}, function(html){
             $('#networkarea-areas').html('').append(html);
         });
     });

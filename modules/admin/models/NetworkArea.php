@@ -89,4 +89,16 @@ class NetworkArea extends ActiveRecord
         }
         return $temp;
     }
+
+    public static function GetCodes(){
+        $rows = self::find()->select(['address_library_id'])->all();
+        $temp = [];
+        if($rows){
+            foreach($rows as $r){
+                $temp[] = $r->address_library_id;
+            }
+        }
+        return $temp;
+    }
+
 }
