@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use app\models\AddressLibrary;
+use app\modules\admin\models\Network;
 use Yii;
 use app\modules\admin\models\NetworkArea;
 use app\modules\admin\models\NetworkAreaSearch;
@@ -55,7 +56,36 @@ class NetworkAreaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate(){
+        $model = new NetworkArea();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $data = Yii::$app->request->post('NetworkArea');
+            $m = AddressLibrary::find()->where(['Address_Library_Id' => $data['areas']])->one();
+            $attributes = [
+                'network_name' => Network::GetNameById($model->network_id),
+                'address_library_id' => $data['areas'],
+                'address' => $m->Country.' '.$m->Region1.' '.$m->Region2.' '.$m->Region3.' '.$m->Region4.' '.$m->Locality.' '.$m->Postcode,
+                'created_by' => 1, //Yii session data
+            ];
+            $model->setAttributes($attributes);
+            if($model->save()){
+                $m->Network_Id = $model->network_id;
+                $m->save();
+            }else{
+                print_r($model->getErrors()); exit;
+            }
+
+            Yii::$app->session->setFlash('success', 'Create Success!');
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionBatchCreate()
     {
         $model = new NetworkArea();
 
@@ -65,6 +95,7 @@ class NetworkAreaController extends Controller
                 $naModel = clone $model;
                 $m = AddressLibrary::find()->where(['Address_Library_Id' => $aid])->one();
                 $attributes = [
+                    'network_name' => Network::GetNameById($model->network_id),
                     'address_library_id' => $aid,
                     'address' => $m->Country.' '.$m->Region1.' '.$m->Region2.' '.$m->Region3.' '.$m->Region4.' '.$m->Locality.' '.$m->Postcode,
                     'created_by' => 1, //Yii session data
@@ -80,7 +111,7 @@ class NetworkAreaController extends Controller
             Yii::$app->session->setFlash('success', 'Create Success!');
             return $this->redirect(['index']);
         } else {
-            return $this->render('create', [
+            return $this->render('batch', [
                 'model' => $model,
             ]);
         }
@@ -96,6 +127,7 @@ class NetworkAreaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->network_name = Network::GetNameById($model->network_id);
             $model->updated_by = 2;
             if($model->save()){
                 $m = AddressLibrary::find()->where(['Address_Library_Id' => $model->address_library_id])->one();

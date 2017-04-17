@@ -19,7 +19,7 @@ class NetworkAreaSearch extends NetworkArea
     {
         return [
             [['network_area_id', 'network_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'address_library_id'], 'integer'],
-            [['address'], 'safe'],
+            [['address', 'network_name'], 'safe'],
         ];
     }
 
@@ -68,8 +68,8 @@ class NetworkAreaSearch extends NetworkArea
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'address', $this->address]);
-
+        $query->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'network_name', $this->network_name]);
         return $dataProvider;
     }
 }

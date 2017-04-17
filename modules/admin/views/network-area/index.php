@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Network Area', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Batch Create Network Area', ['batch-create'], ['class' => 'btn btn-success']) ?>
         <a href="javascript:AjaxBatchDel();" class="btn btn-danger">Batch Delete</a>
     </p>
     <?= GridView::widget([
@@ -33,13 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => \yii\grid\CheckboxColumn::className()],
 
             'network_area_id',
-            [
+            /*[
                 'attribute' => 'network_id',
                 'filter' => Network::NetworkList(),
                 'value' => function($m){
                         return Network::GetNameById($m->network_id);
                     }
-            ],
+            ],*/
+            'network_name',
             'address',
             'created_at:datetime',
             'updated_at:datetime',

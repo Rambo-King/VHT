@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
 
         <?= $form->field($model, 'areas')->widget(kartik\select2\Select2::className(), [
-            'options' => ['placeholder' => 'Select Areas ...']
+            'options' => ['placeholder' => 'Select Areas ...', 'multiple' => true]
         ]) ?>
 
         <div class="form-group">
