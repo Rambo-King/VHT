@@ -65,7 +65,7 @@ $script = <<<JS
             $('#networkarea-network_id').parent().siblings('.col-xs-3').find('.help-block').html('Please Select a Network').css({'color':'#a94442'})
         }*/
         var country = $(this).val();
-        $.post('/admin/network/get-region', {'country':country}, function(html){
+        $.post('/admin/network-area/get-region', {'country':country}, function(html){
             $('#networkarea-region1').html('').append(html);
         });
     });

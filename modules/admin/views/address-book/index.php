@@ -48,7 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'fixed_line',
             'address',
             'gate',
-            'is_default',
+            [
+                'attribute' => 'is_default',
+                'filter' => [0 => 'N', 1 => 'Y'],
+                'value' => function($m){
+                        return $m->is_default == 0 ? 'N' : 'Y';
+                    }
+            ],
             'created_at:datetime',
             'updated_at:datetime',
             'created_by',
@@ -71,3 +77,25 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 </div>
+
+<script type="text/javascript">
+    function DeleteConfirm(obj){
+        layer.open({
+            skin: 'layui-layer-lan',
+            shift: 1,
+            title:'Kindly Reminder',
+            content:'Please be careful not to resume after deletion ?',
+            btn:['Confirm', 'Cancel'],
+            yes:function(){
+                $.post('/admin/address-book/ajax-delete', {'id':obj.getAttribute('data-id')}, function(bool){
+                    if(bool){
+                        window.location.href = '/admin/address-book';
+                    }
+                });
+            },
+            no:function(index){
+                layer.close(index);
+            }
+        });
+    }
+</script>

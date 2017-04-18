@@ -68,9 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
         layer.open({
             skin: 'layui-layer-lan',
             shift: 1,
-            title:'温馨提示',
-            content:'删除后不可恢复 请谨慎操作?',
-            btn:['确定', '取消'],
+            title:'Kindly Reminder',
+            content:'Please be careful not to resume after deletion ?',
+            btn:['Confirm', 'Cancel'],
             yes:function(){
                 $.post('/admin/unit/ajax-delete', {'id':obj.getAttribute('data-id')}, function(bool){
                     if(bool){

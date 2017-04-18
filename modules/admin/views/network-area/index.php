@@ -71,9 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
             //skin: 'layui-layer-molv',
             skin: 'layui-layer-lan',
             shift: 1,
-            title:'温馨提示',
-            content:'删除后不可恢复 请谨慎操作?',
-            btn:['确定', '取消'],
+            title:'Kindly Reminder',
+            content:'Please be careful not to resume after deletion ?',
+            btn:['Confirm', 'Cancel'],
             yes:function(){
                 $.post('/admin/network-area/ajax-delete', {'id':obj.getAttribute('data-id')}, function(json){
                     if(json.state){
@@ -92,9 +92,9 @@ $this->params['breadcrumbs'][] = $this->title;
             layer.open({
                 skin: 'layui-layer-lan',
                 shift: 1,
-                title:'温馨提示',
-                content:'批量删除后不可恢复 请谨慎操作?',
-                btn:['确定', '取消'],
+                title:'Kindly Reminder',
+                content:'Please be careful not to resume after deletion ?',
+                btn:['Confirm', 'Cancel'],
                 yes:function (index) {
                     var keyStr = keys.join(',');
                     $.post('/admin/network-area/batch-delete', {'keyStr':keyStr}, function(bool){
@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     window.location.href = '/admin/network-area';
                                 }
                             });*/
-                            //window.location.href = '/admin/network-area';
+                            window.location.href = '/admin/network-area';
                         }
                     });
                 },
@@ -122,9 +122,9 @@ $this->params['breadcrumbs'][] = $this->title;
             layer.open({
                 skin: 'layui-layer-lan',
                 shift: 1,
-                title:'温馨提示',
-                content:'请选择要删除的项',
-                btn:['确定'],
+                title:'Kindly Reminder',
+                content:'Please select the items you want to delete',
+                btn:['Confirm'],
                 yes:function (index) {
                     layer.close(index);
                 }

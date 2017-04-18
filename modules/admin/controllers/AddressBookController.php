@@ -47,18 +47,6 @@ class AddressBookController extends Controller
     }
 
     /**
-     * Displays a single AddressBook model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new AddressBook model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -75,10 +63,11 @@ class AddressBookController extends Controller
                 'network_name' => Network::GetNameById($library->Network_Id),
                 'address_library_id' => $data['areas'],
                 'address' => AddressLibrary::AddressString($data['areas']),
-                'create_by' => 1
+                'created_by' => 1
             ];
             $model->setAttributes($attributes);
             if($model->save()){
+                Yii::$app->session->setFlash('success', 'Create Success!');
                 return $this->redirect(['index']);
             }else{
                 print_r($model->getErrors()); exit;
@@ -101,9 +90,28 @@ class AddressBookController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->address_book_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $data = Yii::$app->request->post('AddressBook');
+            $library = AddressLibrary::find()->where(['Address_Library_Id' => $data['areas']])->one();
+            $attributes = [
+                'network_id' => $library->Network_Id,
+                'network_name' => Network::GetNameById($library->Network_Id),
+                'address_library_id' => $data['areas'],
+                'address' => AddressLibrary::AddressString($data['areas']),
+                'updated_by' => 2
+            ];
+            $model->setAttributes($attributes);
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'Update Success!');
+                return $this->redirect(['index']);
+            }else{
+                print_r($model->getErrors()); exit;
+            }
         } else {
+            $library = AddressLibrary::find()->where(['Address_Library_Id' => $model->address_library_id])->one();
+            $model->country = $library->Country;
+            $model->region1 = $library->Region1;
+            $model->areas = $library->Address_Library_Id;
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -162,6 +170,17 @@ class AddressBookController extends Controller
             }
         }
         echo $options;
+    }
+
+    public function actionAjaxDelete(){
+        $id = Yii::$app->request->post('id');
+        $model = $this->findModel($id);
+        if($model->delete()){
+            Yii::$app->session->setFlash('success', 'Delete Success!');
+        }else{
+            Yii::$app->session->setFlash('success', 'Delete Failure!');
+        }
+        exit(true);
     }
 
 }

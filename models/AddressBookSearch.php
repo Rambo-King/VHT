@@ -51,15 +51,16 @@ class AddressBookSearch extends AddressBook{
             'query' => $query,
         ]);
 
+        $attributes = [
+            'member_email' => [
+                'asc' => ['vht_member.email' => SORT_ASC],
+                'desc' => ['vht_member.email' => SORT_DESC],
+                'label' => 'Member'
+            ],
+        ];
+        $attributes = array_merge($attributes, $dataProvider->getSort()->attributes);
         $dataProvider->setSort([
-            'attributes' => [
-                /*'address_book_id',
-                'member_email' => [
-                    'asc' => ['vht_member.email' => SORT_ASC],
-                    'desc' => ['vht_member.email' => SORT_DESC],
-                    'label' => 'Member'
-                ],*/
-            ]
+            'attributes' => $attributes
         ]);
 
         $this->load($params);

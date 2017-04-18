@@ -107,18 +107,31 @@ class AddressLibrary extends \yii\db\ActiveRecord
         return ArrayHelper::map($rows, 'Region1', 'Region1');
     }
 
+    //Network Area Update / All Address Library country + region1
     public static function CodeList($networkId, $addressLibraryId, $country, $region1){
         $records = NetworkArea::GetCodesByNetworkId($networkId);
         $rows = self::find()->where(['Country' => $country, 'Region1' => $region1])->all();
         $temp = [];
         if($rows){
             foreach($rows as $r){
-                if($r->Address_Library_Id != $addressLibraryId && in_array($r->Address_Library_Id, $records)) continue;
+                if(in_array($r->Address_Library_Id, $records) && $r->Address_Library_Id != $addressLibraryId) continue;
                 $temp[$r->Address_Library_Id] = $r->Region2.' '.$r->Region3.' '.$r->Region4.' '.$r->Locality.' '.$r->Postcode;
             }
         }
         return $temp;
         //return ArrayHelper::map($rows, 'Address_Library_Id', 'Postcode');
+    }
+
+    //Address Book Update / Network Area Address
+    public static function CodeList2($country, $region1){
+        $rows = self::find()->where(['Country' => $country, 'Region1' => $region1])->andwhere(['is not', 'Network_Id', null])->all();
+        $temp = [];
+        if($rows){
+            foreach($rows as $r){
+                $temp[$r->Address_Library_Id] = $r->Region2.' '.$r->Region3.' '.$r->Region4.' '.$r->Locality.' '.$r->Postcode;
+            }
+        }
+        return $temp;
     }
 
     public static function AddressString($id){

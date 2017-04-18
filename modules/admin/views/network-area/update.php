@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = 'Update';
             'data' => \app\modules\admin\models\Network::NetworkList(),
             'options' => ['placeholder' => 'Select a Network ...']
         ]) ?>
+
         <?= $form->field($model, 'country')->widget(kartik\select2\Select2::className(), [
             'data' => \app\models\AddressLibrary::CountryList(),
             'options' => ['placeholder' => 'Select a Country ...']
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
         <?= $form->field($model, 'areas')->widget(kartik\select2\Select2::className(), [
             'data' => \app\models\AddressLibrary::CodeList($model->network_id, $model->address_library_id, $model->country, $model->region1),
-            'options' => ['placeholder' => 'Select Areas ...']
+            'options' => ['placeholder' => 'Select a Area ...']
         ]) ?>
 
         <div class="form-group">
@@ -57,3 +58,23 @@ $this->params['breadcrumbs'][] = 'Update';
     </div>
 
 </div>
+
+<?php
+$script = <<<JS
+    $('#networkarea-country').change(function(){
+        $('#networkarea-areas').html('').append('<option value="">Select a Area ...</option>');
+        var country = $(this).val();
+        $.post('/admin/network-area/get-region', {'country':country}, function(html){
+            $('#networkarea-region1').html('').append(html);
+        });
+    });
+    $('#networkarea-region1').change(function(){
+        var country = $('#networkarea-country').val();
+        var region1 = $(this).val();
+        $.post('/admin/network-area/get-code', {'country':country, 'region1':region1}, function(html){
+            $('#networkarea-areas').html('').append(html);
+        });
+    });
+JS;
+$this->registerJs($script);
+?>
