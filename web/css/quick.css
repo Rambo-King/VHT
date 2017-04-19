@@ -1,0 +1,84 @@
+.clearFix::after {
+    clear: both;
+}
+.content h1{
+    text-align: center;
+}
+.bs-example, .bs-example2 {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    position: relative;
+    width: 49%;
+    float: left;
+}
+.bs-example2{
+    width: 100%;
+}
+.bs-example::after, .bs-example2:after {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 4px 0;
+    color: #555;
+    font-size: 12px;
+    font-weight: 700;
+    left: -1px;
+    letter-spacing: 1px;
+    padding: 3px 7px;
+    position: absolute;
+    text-shadow: 1px 1px 0 #fff;
+    text-transform: uppercase;
+    top: -1px;
+}
+.mailing-address{ margin-right: 20px; }
+.mailing-address:after{ content: "Mailing Address"; }
+.receiving-address:after{ content: "Receiving Address"; }
+.product:after{ content: "Product List"; }
+.order-quick:after{ content: "Order Info"; }
+.btn{
+    margin-top: 15px;
+}
+.commit{
+    text-align: center;
+}
+.productPiece{
+    margin-top: 10px;
+}
+.productPiece input{
+    border: 1px solid #fff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+    color: #444;
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 0.6em;
+    padding: 2px 5px 4px;
+    width: 80px;
+}
+.productPiece input.pDes{
+    width: 150px;
+}
+.unit-select{
+    display: inline-flex;
+    margin-right: 0.6em;
+    width: 80px;
+}
+.product-actions{
+    float: right;
+}
+a.addAnchor, a.removeAnchor{
+    background: url("../images/shipping-icon-add.png");
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+    margin-top: 0.1em;
+    width: 30px;
+}
+a.removeAnchor{
+    background: url("../images/shipping-icon-remove.png");
+}
+.hide{
+    display: none;
+}

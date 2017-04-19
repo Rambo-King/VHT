@@ -7,9 +7,8 @@ use yii\web\Controller;
 class OrderController extends Controller{
 
     public function actionQuick(){
-        $orderSn = Helper::BuildOrderSn();
-        var_export($orderSn);
-        exit;
+        /*$orderSn = Helper::BuildOrderSn();
+        exit($orderSn);*/
         return $this->render('quick');
 
         /*
