@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%address_book}}".
@@ -108,4 +109,16 @@ class AddressBook extends ActiveRecord
     public function getMember(){
         return $this->hasOne(Member::className(), ['member_id' => 'member_id']);
     }
+
+    public static function BookList($memberId, $type){
+        $rows = self::find()->where(['member_id' => $memberId, 'type' => $type])->all();
+        $temp = [];
+        if($rows){
+            foreach($rows as $r){
+                $temp[$r->address_book_id] = $r->address.' '.$r->gate;
+            }
+        }
+        return $temp;
+    }
+
 }

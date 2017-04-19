@@ -97,6 +97,7 @@ $action = Yii::$app->controller->action->id;
                     <li class="active">
                         <a href="/admin">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            <small class="badge pull-right bg-yellow">Dashboard</small>
                         </a>
                     </li>
 
@@ -127,17 +128,20 @@ $action = Yii::$app->controller->action->id;
                     </li>
 
                     <li>
-                        <a href="<?= \yii\helpers\Url::to(['/admin/member']) ?>">
-                            <i class="fa fa-user"></i> <span>Member</span>
-                            <small class="badge pull-right bg-yellow">member</small>
-                        </a>
-                    </li>
-
-                    <li>
                         <a href="<?= \yii\helpers\Url::to(['/admin/unit']) ?>">
                             <i class="fa fa-calendar"></i> <span>Unit</span>
                             <small class="badge pull-right bg-red">calc</small>
                         </a>
+                    </li>
+
+                    <li class="treeview <?= in_array($controller, ['order', 'order-product']) ? 'active' : '' ?>">
+                        <a href="#">
+                            <i class="fa fa-list"></i> <span>Order</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li <?= $controller=='order' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/order'])?>"><i class="fa fa-angle-double-right"></i> Order</a></li>
+                            <li <?= $controller=='order-product' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/order-product'])?>"><i class="fa fa-angle-double-right"></i> Order Product</a></li>
+                        </ul>
                     </li>
 
                 </ul>

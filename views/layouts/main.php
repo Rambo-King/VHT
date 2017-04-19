@@ -45,10 +45,10 @@ AppAsset::register($this);
                 ['label' => 'Login', 'url' => ['/member/login']]
             ) : (
                 '<li>'
-                . Html::beginForm(['/member/logout'], 'post', ['class' => 'navbar-form'])
+                . Html::beginForm(['/member/logout'], 'post', ['class' => ''])
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->email . ')',
-                    ['class' => 'btn btn-link']
+                    ['class' => 'btn-link', 'style' => 'padding:13px 0;']
                 )
                 . Html::endForm()
                 . '</li>'

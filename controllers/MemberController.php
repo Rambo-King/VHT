@@ -50,7 +50,7 @@ class MemberController extends Controller{
     public function actionLogin(){
         $model = new MemberLoginForm();
         if($model->load(Yii::$app->request->post()) && $model->login()){
-            return $this->goHome();
+            return $this->goBack();
         }else{
             return $this->render('login', ['model' => $model]);
         }

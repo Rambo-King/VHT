@@ -1,6 +1,8 @@
 <?php
 namespace app\common;
 
+use app\models\Waybill;
+
 class Helper{
 
     public static function BuildOrderSn(){
@@ -10,6 +12,8 @@ class Helper{
     }
 
     public static function BuildBillNumber($fix = 'ECCS', $sort = 10){
+        $row = Waybill::find()->select('max(waybill_id) as num')->asArray()->one();
+        $sort = is_null($row['num']) ? 0 : intval($row['num']);
         $fri = substr($fix, 2, 8);
         $fri+= ($sort - 1);
         $len = strlen($fri);

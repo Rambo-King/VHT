@@ -1,4 +1,4 @@
-.clearFix::after {
+.clearFix::after, .clearBoth {
     clear: both;
 }
 .content h1{
@@ -55,7 +55,13 @@
     font-size: 14px;
     margin-right: 0.6em;
     padding: 2px 5px 4px;
-    width: 80px;
+    width: 75px;
+}
+.productPiece input.error{
+    border: 1px solid #d40511;
+}
+.productPiece input.pName{
+    width: 150px;
 }
 .productPiece input.pDes{
     width: 150px;
@@ -63,7 +69,7 @@
 .unit-select{
     display: inline-flex;
     margin-right: 0.6em;
-    width: 80px;
+    width: 60px;
 }
 .product-actions{
     float: right;

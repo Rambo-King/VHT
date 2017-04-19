@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%unit}}".
@@ -81,4 +82,13 @@ class Unit extends ActiveRecord
         return $rows[$type];
     }
 
+    public static function UnitList($type = 1){
+        $rows = self::find()->where(['type' => $type])->all();
+        return ArrayHelper::map($rows, 'unit_id', 'name');
+    }
+
+    public static function GetUnitName($id){
+        $row = self::find()->where(['unit_id' => $id])->one();
+        return $row ? $row->name : null;
+    }
 }
