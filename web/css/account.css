@@ -1,0 +1,35 @@
+.content h1{
+    text-align: center;
+}
+.account-center .navigation{
+    width: 20%;
+    float: left;
+    margin-right: 20px;
+}
+.nav-title{
+    border: 1px solid #f0f0f0;
+    background-color: #3c8dbc;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+.account-center .nav-contain{
+    border: 1px solid #f0f0f0;
+    border-top: none;
+}
+.account-center .nav-contain .nav{
+    border-bottom: 1px solid #f0f0f0;
+    padding: 15px;
+}
+.nav a{
+    color: #555;
+}
+.nav strong{
+    text-decoration: underline;
+}
+.account-center .main{
+    padding: 20px;
+    background: rgba(0, 0, 0, 0) url("../images/bg-main-wrapper.png") repeat-x scroll 0 0;
+    float: left;
+    width: 75%;
+}

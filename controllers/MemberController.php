@@ -17,7 +17,7 @@ class MemberController extends Controller{
                 'user' => 'user',
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'account'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -35,6 +35,10 @@ class MemberController extends Controller{
                 ],
             ],
         ];
+    }
+
+    private function MemberLoginId(){
+        return Yii::$app->user->identity->member_id;
     }
 
     public function actionRegister(){
@@ -59,6 +63,25 @@ class MemberController extends Controller{
     public function actionLogout(){
         Yii::$app->user->logout();
         return $this->redirect(['login']);
+    }
+
+    public function actionAccount(){
+        return $this->render('account', [
+            'email' => Yii::$app->user->identity->email,
+        ]);
+    }
+
+    public function actionInformation(){
+
+        $this->MemberLoginId();
+    }
+
+    public function actionBook(){
+
+    }
+
+    public function actionOrder(){
+
     }
 
 }

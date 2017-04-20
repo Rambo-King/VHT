@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
@@ -92,6 +93,10 @@ class Member extends ActiveRecord implements IdentityInterface
         return null;
     }
 
+    public $password2;
+    public $password3;
+    public $password4;
+
     /**
      * @inheritdoc
      */
@@ -100,18 +105,48 @@ class Member extends ActiveRecord implements IdentityInterface
         return '{{%member}}';
     }
 
+    public function behaviors(){
+        return [
+            /*[
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],*/
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
+    }
+
+    public function scenarios(){
+        $parentScenarios = parent::scenarios();
+        $selfScenarios = [
+            'add' => ['email', 'password', 'password2', 'account_number', 'company_name'],
+            'update' => ['account_number', 'company_name'],
+            'change' => ['password3', 'password4'],
+        ];
+        return array_merge($parentScenarios, $selfScenarios);
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['email', 'password', 'created_at'], 'required'],
+            [['email', 'password', 'password2'], 'required'],
             [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['email', 'account_number', 'company_name', 'auth_key'], 'string', 'max' => 32],
-            [['password', 'access_token'], 'string', 'max' => 255],
-            [['email'], 'unique'],
-            [['account_number'], 'unique'],
+            [['email', 'account_number', 'auth_key'], 'string', 'max' => 32],
+            [['password', 'company_name', 'access_token'], 'string', 'max' => 255],
+            [['email', 'account_number'], 'unique', 'targetClass' => 'app\models\Member'],
+            ['password2', 'compare', 'compareAttribute'=>'password'],
+
+            [['password3', 'password4'], 'required', 'on' => 'change'],
+            ['password4', 'compare', 'compareAttribute'=>'password3'],
         ];
     }
 
@@ -121,17 +156,20 @@ class Member extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'member_id' => 'Member ID',
+            'member_id' => 'ID',
             'email' => 'Email',
             'password' => 'Password',
             'account_number' => 'Account Number',
             'company_name' => 'Company Name',
             'auth_key' => 'Auth Key',
             'access_token' => 'Access Token',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'created_at' => 'Created Date',
+            'updated_at' => 'Updated Date',
             'created_by' => 'Creator',
             'updated_by' => 'Modifier',
+            'password2' => 'Confirm Password',
+            'password3' => 'New Password',
+            'password4' => 'Confirm Password',
         ];
     }
 

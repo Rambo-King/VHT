@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = 'Update';
     <div class="member-form">
 
         <?php $form = ActiveForm::begin([
-            'enableAjaxValidation' => true,
             'options' => [
                 'class'=>'form-horizontal',
                 'enctype' => 'multipart/form-data',
@@ -28,9 +27,9 @@ $this->params['breadcrumbs'][] = 'Update';
             ],
         ]); ?>
 
-        <?= $form->field($model, 'account_number')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'password3')->passwordInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'password4')->passwordInput(['maxlength' => true]) ?>
 
         <div class="form-group">
             <div class="col-xs-2 col-xs-offset-2">
