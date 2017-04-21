@@ -16,10 +16,17 @@ $action = Yii::$app->controller->action->id;
             <?php endif; ?>
         </div>
         <div class="nav">
-            <?php if($action == 'info'): ?>
+            <?php if($action == 'information'): ?>
                 <strong>Account Information</strong>
             <?php else: ?>
                 <a href="/member/information"><span>Account Information</span></a>
+            <?php endif; ?>
+        </div>
+        <div class="nav">
+            <?php if($action == 'password'): ?>
+                <strong>Change Password</strong>
+            <?php else: ?>
+                <a href="/member/password"><span>Change Password</span></a>
             <?php endif; ?>
         </div>
         <div class="nav">

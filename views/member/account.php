@@ -10,7 +10,7 @@ $this->title = 'Account Center';
 
         <div class="main">
             Hello, <?= $email ?>! <br/>
-            From your My Account Dashboard
+            This is your Account Dashboard Panel
         </div>
     </div>
 </div>
