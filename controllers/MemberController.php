@@ -25,7 +25,7 @@ class MemberController extends Controller{
                 'user' => 'user',
                 'rules' => [
                     [
-                        'actions' => ['logout', 'account', 'information', 'password', 'order'],
+                        'actions' => ['logout', 'account', 'information', 'password', 'order', 'book'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -157,8 +157,21 @@ class MemberController extends Controller{
     }
 
     public function actionBook(){
-        $books = AddressBook::find()->where(['' => $this->MemberLoginId()])->all();
+        $mailing = $receiving = null;
+        $default = AddressBook::find()->where(['member_id' => $this->MemberLoginId(), 'is_default' => 1])->all();
+        if($default){
+            foreach($default as $book){
+                if($book->type == 1) $mailing = $book;
+                else if($book->type == 2) $receiving = $book;
+            }
+        }
+        $books = AddressBook::find()->where(['member_id' => $this->MemberLoginId(), 'is_default' => 0])->all();
 
+        return $this->render('book', [
+            'mailing' => $mailing,
+            'receiving' => $receiving,
+            'books' => $books,
+        ]);
     }
 
     public function actionOrder(){

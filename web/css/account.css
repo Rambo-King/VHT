@@ -167,7 +167,7 @@ a {
     width: 100%;
 }
 .order-info-box {
-    background: #fff url("../images/bkg_block-title.gif") repeat-x scroll 0 0;
+    /*background: #fff url("../images/bkg_block-title.gif") repeat-x scroll 0 0;*/
     border: 1px solid #d0cbc1;
     margin: 0 0 15px;
     padding: 12px 15px;
@@ -178,7 +178,7 @@ a {
     line-height: 1.35;
     margin: 0 0 5px;
 }
-.order-items h2, .order-items h3 {
+.order-items h2, .order-items h3, .table-caption {
     clear: none;
     color: #0a263c;
     font-size: 13px;
