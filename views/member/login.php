@@ -28,6 +28,7 @@ $this->title = 'Member Login';
         <div class="form-group">
             <div class="col-xs-2 col-xs-offset-2">
                 <?= Html::submitButton('Login', ['class' => 'btn btn-success']) ?>
+                <?= Html::a('Register', ['register'], ['class' => 'btn btn-success']) ?>
             </div>
         </div>
 

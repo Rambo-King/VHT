@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\components\Paging;
 use app\models\AddressBook;
 use app\models\Member;
 use app\models\MemberLoginForm;
@@ -16,6 +17,7 @@ use yii\widgets\ActiveForm;
 
 class MemberController extends Controller{
 
+    //public $defaultAction = 'login';
     public function behaviors(){
         return [
             'access' => [
@@ -23,7 +25,7 @@ class MemberController extends Controller{
                 'user' => 'user',
                 'rules' => [
                     [
-                        'actions' => ['logout', 'account', 'information', 'password'],
+                        'actions' => ['logout', 'account', 'information', 'password', 'order'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,8 +74,27 @@ class MemberController extends Controller{
     }
 
     public function actionAccount(){
+        //Yii::$app->user->identity->email
+        $member = $this->findModel($this->MemberLoginId());
+        $conditions = [
+            'member_id' => $this->MemberLoginId()
+        ];
+        $orders = Order::find()->where($conditions)->limit(2)->orderBy('created_at desc')->all();
+
+        $mailing = $receiving = null;
+        $books = AddressBook::find()->where(['member_id' => $this->MemberLoginId(), 'is_default' => 1])->all();
+        if($books){
+            foreach($books as $book){
+                if($book->type == 1) $mailing = $book;
+                else if($book->type == 2) $receiving = $book;
+            }
+        }
+
         return $this->render('account', [
-            'email' => Yii::$app->user->identity->email,
+            'member' => $member,
+            'orders' => $orders,
+            'mailing' => $mailing,
+            'receiving' => $receiving,
         ]);
     }
 
@@ -141,8 +162,16 @@ class MemberController extends Controller{
     }
 
     public function actionOrder(){
-        $orders = Order::find()->where(['' => $this->MemberLoginId()])->all();
+        $count = Order::find()->where(['member_id' => $this->MemberLoginId()])->count();
+        $page = new Paging($count, 2);
+        $sql = "select * from {{%order}} where member_id = {$this->MemberLoginId()} ".$page->limit;
+        $orders = Order::findBySql($sql)->all();
+        $plist = $page->fpage(array(0,1,2,3,4,5,6,7));
 
+        return $this->render('order', [
+            'orders' => $orders,
+            'plist' => $plist,
+        ]);
     }
 
 }

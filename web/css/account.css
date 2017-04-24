@@ -1,3 +1,12 @@
+.box-head:after, .col2-set:after, .box:after{
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    overflow: hidden;
+}
 .content h1{
     text-align: center;
 }
@@ -64,4 +73,86 @@
 }
 .buttons-set .btn-primary{
     float: right;
+}
+
+.welcome-msg {
+    margin: 0 8em 1.5em 0;
+}
+.box-account {
+    border: 1px solid #ddd;
+    margin: 0 0 20px;
+    padding: 15px;
+}
+.box-account .box-head {
+    border-bottom: 1px solid #ddd;
+    margin: 0 0 10px;
+    text-align: right;
+}
+.box-account .box-head h2 {
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+}
+a {
+    color: #aaa;
+    text-decoration: none;
+}
+.data-table {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #f2f2f2;
+    width: 100%;
+}
+.data-table th, .data-table td {
+    border-bottom: 1px solid #f2f2f2;
+    border-right: 1px solid #f2f2f2;
+    padding: 10px;
+    vertical-align: top;
+}
+.data-table th {
+    font-weight: normal;
+    padding: 15px 10px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.col2-set {
+    position: relative;
+    margin: 0 0 15px;
+}
+.box-title {
+    margin: 0 0 8px;
+    padding: 0 0 2px;
+    text-align: right;
+}
+.col2-set .col-1 {
+    float: left;
+    width: 48.5%;
+}
+.col2-set .col-2 {
+    float: right;
+    width: 48.5%;
+}
+.box-title h3, .dashboard .box-title h4 {
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+}
+.box-info h4 {
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.box-info .box-head{
+    padding: 0 0 5px 0;
+}
+.page {
+    list-style: outside none none;
+    margin: 20px 0;
+    padding-left: 0;
+    text-align: left;
 }

@@ -1,5 +1,5 @@
 <?php
-//Yii::setAlias('@common', dirname(__DIR__) . '/common');
+//Yii::setAlias('@components', dirname(__DIR__) . '/components');
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -8,6 +8,7 @@ $config = [
     'id' => 'vht',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    //'defaultRoute' => 'member',
     'components' => [
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -68,10 +69,10 @@ $config = [
 ];
 
 if (YII_ENV_DEV) {
-    /*$config['bootstrap'][] = 'debug';
+    $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-    ];*/
+    ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
