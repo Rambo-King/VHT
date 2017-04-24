@@ -37,7 +37,7 @@ $this->title = 'Account Center';
                         <td><?= $o->mailing_address ?></td>
                         <td><?= $o->receiving_address ?></td>
                         <td><em><?= $o->state ?></em></td>
-                        <td><a href="/member/order/view/<?= $o->order_id ?>">View Order</a></td>
+                        <td><a href="/order/view/<?= $o->order_id ?>">View Order</a></td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>

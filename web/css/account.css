@@ -123,10 +123,13 @@ a {
     position: relative;
     margin: 0 0 15px;
 }
-.box-title {
+.box-title, .box-top {
     margin: 0 0 8px;
     padding: 0 0 2px;
     text-align: right;
+}
+.box-top{
+    text-align: left;
 }
 .col2-set .col-1 {
     float: left;
@@ -155,4 +158,31 @@ a {
     margin: 20px 0;
     padding-left: 0;
     text-align: left;
+}
+.page-title {
+    border-bottom: 1px solid #e5e5e5;
+    margin: 0 0 25px;
+    overflow: hidden;
+    padding-bottom: 0;
+    width: 100%;
+}
+.order-info-box {
+    background: #fff url("../images/bkg_block-title.gif") repeat-x scroll 0 0;
+    border: 1px solid #d0cbc1;
+    margin: 0 0 15px;
+    padding: 12px 15px;
+}
+.order-info-box h2 {
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.35;
+    margin: 0 0 5px;
+}
+.order-items h2, .order-items h3 {
+    clear: none;
+    color: #0a263c;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 5px;
+    padding: 0;
 }

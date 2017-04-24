@@ -23,7 +23,7 @@ class OrderController extends Controller{
                 'user' => 'user',
                 'rules' => [
                     [
-                        'actions' => ['quick', 'complete'],
+                        'actions' => ['quick', 'complete', 'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -152,6 +152,22 @@ class OrderController extends Controller{
 
     public function actionValidateForm(){
 
+    }
+
+    public function actionView($id){
+        $order = Order::findOne($id);
+        $mailing = AddressBook::findOne($order->mailing_address_id);
+        $receiving = AddressBook::findOne($order->receiving_address_id);
+        $products = OrderProduct::find()->where(['order_id' => $id])->all();
+        //订单对应的路由信息
+
+
+        return $this->render('view', [
+            'order' => $order,
+            'mailing' => $mailing,
+            'receiving' => $receiving,
+            'products' => $products,
+        ]);
     }
 
 }
