@@ -19,8 +19,6 @@ $this->title = 'Order Quick';
     <div class="bs-example2 order-quick">
         <?php $form = ActiveForm::begin([
             'id' => 'order-form',
-            /*'enableAjaxValidation' => true,
-            'validationUrl' => \yii\helpers\Url::toRoute(['validate-form']),*/
         ]); ?>
 
         <div class="bs-example mailing-address">
@@ -28,12 +26,6 @@ $this->title = 'Order Quick';
                 \app\models\AddressBook::BookList(Yii::$app->user->identity->getId(), 1),
                 ['class' => 'address-select']
             ) ?>
-            <?/*= Select2::widget([
-                'name' => 'mailing-address',
-                'data' => \app\models\AddressBook::BookList(Yii::$app->user->identity->getId(), 1),
-                'size' => Select2::MEDIUM,
-                'options' => ['placeholder' => 'Select a Address ...'],
-            ]) */?>
             <?= Html::a('Add Mailing Address', '#', [
                 'id' => 'mailing-create',
                 'data-toggle' => 'modal',
@@ -178,7 +170,8 @@ $this->registerJs($script);
 ?>
 <script type="text/javascript">
     function _InputCheck(){
-        var inputs = $('.product-piece-wrapper input:visible');
+        //var inputs = $('.product-piece-wrapper input:visible');
+        var inputs = $('.product-piece-wrapper input');
         inputs.blur(function(){
             if(!$(this).hasClass('pDes')){
                 var val = $(this).val().trim();
@@ -219,7 +212,7 @@ $this->registerJs($script);
         if($('.productPiece.hide').length > 0){
             show.last().find('.product-actions').find('a.addAnchor').removeClass('hide');
         }
-        _InputCheck();
+        //_InputCheck();
     }
 
     function RemoveRow(obj){
@@ -237,6 +230,6 @@ $this->registerJs($script);
             show.last().find('.product-actions').find('a.addAnchor').removeClass('hide');
             show.last().find('.product-actions').find('a.removeAnchor').addClass('hide');
         }
-        _InputCheck();
+        //_InputCheck();
     }
 </script>

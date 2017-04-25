@@ -24,9 +24,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'mailing_address_id')->textInput() ?>
 
+    <?= $form->field($model, 'mailing_name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'mailing_telephone')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'mailing_address')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'receiving_address_id')->textInput() ?>
+
+    <?= $form->field($model, 'receiving_name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'receiving_telephone')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'receiving_address')->textInput(['maxlength' => true]) ?>
 

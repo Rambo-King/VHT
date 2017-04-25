@@ -15,8 +15,12 @@ use yii\db\ActiveRecord;
  * @property integer $network_id
  * @property string $network_name
  * @property integer $mailing_address_id
+ * @property string $mailing_name
+ * @property string $mailing_telephone
  * @property string $mailing_address
  * @property integer $receiving_address_id
+ * @property string $receiving_name
+ * @property string $receiving_telephone
  * @property string $receiving_address
  * @property integer $created_at
  * @property integer $updated_at
@@ -51,9 +55,9 @@ class Order extends ActiveRecord
     public function rules()
     {
         return [
-            [['order_number', 'state', 'member_id', 'network_id', 'network_name', 'mailing_address_id', 'mailing_address', 'receiving_address_id', 'receiving_address'], 'required'],
+            [['order_number', 'state', 'member_id', 'network_id', 'network_name', 'mailing_address_id', 'mailing_address', 'receiving_address_id', 'receiving_address', 'mailing_name', 'mailing_telephone', 'receiving_name', 'receiving_telephone'], 'required'],
             [['state', 'member_id', 'network_id', 'mailing_address_id', 'receiving_address_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['order_number', 'network_name'], 'string', 'max' => 32],
+            [['order_number', 'network_name', 'mailing_name', 'mailing_telephone', 'receiving_name', 'receiving_telephone'], 'string', 'max' => 32],
             [['mailing_address', 'receiving_address'], 'string', 'max' => 200],
         ];
     }
@@ -71,8 +75,12 @@ class Order extends ActiveRecord
             'network_id' => 'Network ID',
             'network_name' => 'Network Name',
             'mailing_address_id' => 'Mailing Address ID',
+            'mailing_name' => 'Mailing Name',
+            'mailing_telephone' => 'Mailing Phone',
             'mailing_address' => 'Mailing Address',
             'receiving_address_id' => 'Receiving Address ID',
+            'receiving_name' => 'Receiving Name',
+            'receiving_telephone' => 'Receiving Phone',
             'receiving_address' => 'Receiving Address',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

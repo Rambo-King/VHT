@@ -34,7 +34,6 @@ class OrderController extends Controller{
 
     public function actionQuick(){
         if(Yii::$app->request->post()){
-            //print_r(Yii::$app->request->post());exit;
             $data = Yii::$app->request->post();
             //数据校验 先不做
             $order = new Order();
@@ -56,8 +55,12 @@ class OrderController extends Controller{
                     'network_id' => $mailingBook->network_id,
                     'network_name' => $mailingBook->network_name,
                     'mailing_address_id' => $data['mailing-address'],
+                    'mailing_name' => $mailingBook->name,
+                    'mailing_telephone' => $mailingBook->telephone.($mailingBook->fixed_line ? ' / '.$mailingBook->fixed_line : ''),
                     'mailing_address' => $mailingBook->address.' '.$mailingBook->gate,
                     'receiving_address_id' => $data['mailing-address'],
+                    'receiving_name' => $receivingBook->name,
+                    'receiving_telephone' => $receivingBook->telephone,
                     'receiving_address' => $receivingBook->address.' '.$receivingBook->gate,
                 ];
                 $order->setAttributes($orderAttributes);
@@ -141,7 +144,6 @@ class OrderController extends Controller{
         }else{
             return $this->render('quick');
         }
-
     }
 
     public function actionComplete(){
@@ -150,22 +152,13 @@ class OrderController extends Controller{
         ]);
     }
 
-    public function actionValidateForm(){
-
-    }
-
     public function actionView($id){
         $order = Order::findOne($id);
-        $mailing = AddressBook::findOne($order->mailing_address_id);
-        $receiving = AddressBook::findOne($order->receiving_address_id);
         $products = OrderProduct::find()->where(['order_id' => $id])->all();
         //订单对应的路由信息
 
-
         return $this->render('view', [
             'order' => $order,
-            'mailing' => $mailing,
-            'receiving' => $receiving,
             'products' => $products,
         ]);
     }

@@ -29,9 +29,17 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'mailing_address_id') ?>
 
+    <?php // echo $form->field($model, 'mailing_name') ?>
+
+    <?php // echo $form->field($model, 'mailing_telephone') ?>
+
     <?php // echo $form->field($model, 'mailing_address') ?>
 
     <?php // echo $form->field($model, 'receiving_address_id') ?>
+
+    <?php // echo $form->field($model, 'receiving_name') ?>
+
+    <?php // echo $form->field($model, 'receiving_telephone') ?>
 
     <?php // echo $form->field($model, 'receiving_address') ?>
 

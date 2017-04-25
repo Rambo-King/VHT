@@ -21,10 +21,9 @@ $this->title = 'Order View';
                         </div>
                         <div class="box-content">
                             <address>
-                                <?= $mailing->name ?><br/>
-                                <?= $mailing->address ?>
-                                <?= $mailing->gate ?><br/>
-                                T: <?= $mailing->telephone.' '.$mailing->fixed_line ?><br/>
+                                <?= $order->mailing_name ?><br/>
+                                <?= $order->mailing_address ?><br/>
+                                T: <?= $order->mailing_telephone ?><br/>
                             </address>
                         </div>
                     </div>
@@ -35,10 +34,9 @@ $this->title = 'Order View';
                             </div>
                             <div class="box-content">
                                 <address>
-                                    <?= $receiving->name ?><br/>
-                                    <?= $receiving->address ?>
-                                    <?= $receiving->gate ?><br/>
-                                    T: <?= $receiving->telephone.' '.$receiving->fixed_line ?><br/>
+                                    <?= $order->receiving_name ?><br/>
+                                    <?= $order->receiving_address ?><br/>
+                                    T: <?= $order->receiving_telephone ?><br/>
                                 </address>
                             </div>
                         </div>
