@@ -112,7 +112,7 @@ class AddressBook extends ActiveRecord
 
     public static function BookList($memberId, $type){
         $rows = self::find()->where(['member_id' => $memberId, 'type' => $type])->all();
-        $temp = [];
+        $temp = ['' => 'Select a Address'];
         if($rows){
             foreach($rows as $r){
                 $temp[$r->address_book_id] = $r->address.' '.$r->gate;

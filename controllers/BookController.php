@@ -97,4 +97,39 @@ class BookController extends Controller{
         echo $options;
     }
 
+    public function actionModalCreate(){
+        $model = new AddressBook();
+        if ($model->load(Yii::$app->request->post())) {
+            $data = Yii::$app->request->post('AddressBook');
+            $library = AddressLibrary::find()->where(['Address_Library_Id' => $data['areas']])->one();
+            $mid = Yii::$app->user->identity->getId();
+            $attributes = [
+                'member_id' => $mid,
+                'network_id' => $library->Network_Id,
+                'network_name' => Network::GetNameById($library->Network_Id),
+                'address_library_id' => $data['areas'],
+                'address' => AddressLibrary::AddressString($data['areas']),
+            ];
+            $model->setAttributes($attributes);
+            if($model->save()){
+                if($model->is_default == 1){
+                    AddressBook::updateAll(['is_default' => 0], ['member_id' => $mid, 'type' => $model->type]);
+                }
+                $json = [
+                    'id' => $model->primaryKey,
+                    'type' => $model->type,
+                    'address' => $model->address.' '.$model->gate
+                ];
+                exit(json_encode(['status' => true, 'data' => $json]));
+            }else{
+                exit(json_encode(['status' => false, 'msg' => $model->getErrors()]));
+            }
+        }else{
+            $type = Yii::$app->request->get('type');
+            $model->type = intval($type);
+            return $this->renderAjax('modal', [
+                'model' => $model,
+            ]);
+        }
+    }
 }

@@ -24,33 +24,41 @@ $this->title = 'Order Quick';
         ]); ?>
 
         <div class="bs-example mailing-address">
-            <?= Select2::widget([
+            <?= Html::dropDownList('mailing-address', null,
+                \app\models\AddressBook::BookList(Yii::$app->user->identity->getId(), 1),
+                ['class' => 'address-select']
+            ) ?>
+            <?/*= Select2::widget([
                 'name' => 'mailing-address',
-                'data' => \app\models\AddressBook::BookList(Yii::$app->user->identity->member_id, 1),
+                'data' => \app\models\AddressBook::BookList(Yii::$app->user->identity->getId(), 1),
                 'size' => Select2::MEDIUM,
                 'options' => ['placeholder' => 'Select a Address ...'],
-            ]) ?>
+            ]) */?>
             <?= Html::a('Add Mailing Address', '#', [
-                'id' => 'create',
+                'id' => 'mailing-create',
                 'data-toggle' => 'modal',
-                'data-target' => '#create-modal',
-                'class' => 'btn btn-success',
+                'data-target' => '#address-modal',
+                'data-url' => \yii\helpers\Url::toRoute(['/book/modal-create']),
+                'data-title' => 'Add Mailing Address',
+                'data-type' => 1,
+                'class' => 'modalDialog btn btn-success',
             ]);
             ?>
         </div>
 
         <div class="bs-example receiving-address">
-            <?= Select2::widget([
-                'name' => 'receiving-address',
-                'data' => \app\models\AddressBook::BookList(Yii::$app->user->identity->member_id, 2),
-                'size' => Select2::MEDIUM,
-                'options' => ['placeholder' => 'Select a Address ...'],
-            ]) ?>
+            <?= Html::dropDownList('receiving-address', null,
+                \app\models\AddressBook::BookList(Yii::$app->user->identity->getId(), 2),
+                ['class' => 'address-select']
+            ) ?>
             <?= Html::a('Add Receiving Address', '#', [
-                'id' => 'create',
+                'id' => 'receiving-create',
                 'data-toggle' => 'modal',
-                'data-target' => '#create-modal',
-                'class' => 'btn btn-success',
+                'data-target' => '#address-modal',
+                'data-url' => \yii\helpers\Url::toRoute(['/book/modal-create']),
+                'data-title' => 'Add Receiving Address',
+                'data-type' => 2,
+                'class' => 'modalDialog btn btn-success',
             ]);
             ?>
         </div>
@@ -99,18 +107,11 @@ $this->title = 'Order Quick';
         <?php ActiveForm::end(); ?>
         <?php
         Modal::begin([
-            'id' => 'create-modal',
-            'header' => '<h4 class="modal-title">Add Mailing Address</h4>',
-            'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
+            'size' => Modal::SIZE_LARGE,
+            'id' => 'address-modal',
+            'header' => '<h4 class="modal-title"></h4>',
+            'options' => ['tabindex' => false]
         ]);
-        echo 'Say hello... waybill';
-        Modal::end();
-        Modal::begin([
-            'id' => 'commit-modal',
-            'header' => '<h4 class="modal-title">Title</h4>',
-            'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>',
-        ]);
-        echo 'Developing....';
         Modal::end();
         ?>
     </div>
@@ -119,6 +120,13 @@ $this->title = 'Order Quick';
 <?php
 $this->registerCssFile('css/quick.css', ['depends' => 'app\assets\AppAsset']);
 $script = <<<JS
+    _InputCheck();
+    $('.modalDialog').on('click', function(){
+        $('#address-modal').find('.modal-title').text($(this).attr('data-title'));
+        $.get($(this).attr('data-url'), {'type': $(this).attr('data-type')}, function(data){
+            $('#address-modal').find('.modal-body').html(data);
+        });
+    });
     $('select[name="mailing-address"]').change(function(){
         $('div.mailing-address').removeClass('has-error');
     });
@@ -161,22 +169,15 @@ $script = <<<JS
         });
         if(flag){
             $(this).submit();
-            /*var form = $(this);
-            $.post(form.attr('action'), form.serialize(), function(json){
-                if(json.status){
-                    location.href = '/order/complete';
-                }
-            }, 'json');*/
         }
     }).on('submit', function(e){
-        InputCheck();
         e.preventDefault();
     });
 JS;
 $this->registerJs($script);
 ?>
 <script type="text/javascript">
-    function InputCheck(){
+    function _InputCheck(){
         var inputs = $('.product-piece-wrapper input:visible');
         inputs.blur(function(){
             if(!$(this).hasClass('pDes')){
@@ -218,7 +219,7 @@ $this->registerJs($script);
         if($('.productPiece.hide').length > 0){
             show.last().find('.product-actions').find('a.addAnchor').removeClass('hide');
         }
-        InputCheck();
+        _InputCheck();
     }
 
     function RemoveRow(obj){
@@ -236,6 +237,6 @@ $this->registerJs($script);
             show.last().find('.product-actions').find('a.addAnchor').removeClass('hide');
             show.last().find('.product-actions').find('a.removeAnchor').addClass('hide');
         }
-        InputCheck();
+        _InputCheck();
     }
 </script>

@@ -88,3 +88,14 @@ a.removeAnchor{
 .hide{
     display: none;
 }
+.address-select{
+    padding: 5px;
+    width: 100%;
+    overflow: hidden;
+}
+.has-error .address-select{
+    border-color: #a94442;
+}
+/*#address-modal .modal-dialog{
+    width: 60%;
+}*/
