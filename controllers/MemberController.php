@@ -51,6 +51,12 @@ class MemberController extends Controller{
 
     public function actionRegister(){
         $model = new MemberRegisterForm();
+
+        if((Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if($model->load(Yii::$app->request->post()) && $member = $model->Register()){
             Yii::$app->getUser()->login($member);
             return $this->goHome();

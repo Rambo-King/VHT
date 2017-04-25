@@ -12,6 +12,7 @@ $this->title = 'Member Register';
     <div class="member-register-form">
 
         <?php $form = ActiveForm::begin([
+            'enableAjaxValidation' => true,
             'options' => [
                 'class'=>'form-horizontal',
                 'enctype' => 'multipart/form-data',
