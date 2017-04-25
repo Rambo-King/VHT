@@ -64,6 +64,7 @@ class NetworkController extends Controller
                     $naModel = clone $networkAreaModel;
                     $attributes = [
                         'network_id' => $model->primaryKey,
+                        'network_name' => $model->name,
                         'address_library_id' => $aid,
                         'address' => AddressLibrary::AddressString($aid),
                         'created_by' => 1, //Yii session data
