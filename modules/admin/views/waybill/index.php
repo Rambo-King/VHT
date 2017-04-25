@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'waybill_number',
             'order_id',
             'order_number',
-            // 'agent_number',
-            // 'created_at',
+            'agent_number',
+            'created_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

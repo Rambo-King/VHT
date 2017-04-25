@@ -134,13 +134,14 @@ $action = Yii::$app->controller->action->id;
                         </a>
                     </li>
 
-                    <li class="treeview <?= in_array($controller, ['order', 'order-product']) ? 'active' : '' ?>">
+                    <li class="treeview <?= in_array($controller, ['order', 'order-product', 'waybill']) ? 'active' : '' ?>">
                         <a href="#">
                             <i class="fa fa-list"></i> <span>Order</span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <li <?= $controller=='order' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/order'])?>"><i class="fa fa-angle-double-right"></i> Order</a></li>
                             <li <?= $controller=='order-product' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/order-product'])?>"><i class="fa fa-angle-double-right"></i> Order Product</a></li>
+                            <li <?= $controller=='waybill' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/waybill'])?>"><i class="fa fa-angle-double-right"></i> Waybill</a></li>
                         </ul>
                     </li>
 
