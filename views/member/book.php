@@ -62,10 +62,12 @@ $this->title = 'Address Book';
                             <div class="<?= $i%2==0 ? 'col-1' : 'col-2' ?>">
                                 <div class="box-content">
                                     <address>
-                                        DR.MENGS<br>
-                                        Belgium Vlaams Gewest Antwerpen Antwerpen Aartselaar Aartselaar 2630                                gate 702<br>
-                                        T: 13707550755 <br>
-                                        <a href="/book/modify/1">Edit Address</a>
+                                        <?= $book->name ?><br/>
+                                        <?= $book->address ?>
+                                        <?= $book->gate ?><br/>
+                                        T: <?= $book->telephone.' '.$book->fixed_line ?><br/>
+                                        Type: <?= $book->type == 1 ? 'Mailing' : 'Receiving' ?> Address<br/>
+                                        <a href="/book/modify/<?= $book->address_book_id ?>">Edit Address</a>
                                     </address>
                                 </div>
                             </div>

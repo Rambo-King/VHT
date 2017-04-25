@@ -67,6 +67,9 @@ class AddressBookController extends Controller
             ];
             $model->setAttributes($attributes);
             if($model->save()){
+                if($model->is_default == 1){
+                    AddressBook::updateAll(['is_default' => 0], ['member_id' => $model->member_id, 'type' => $model->type]);
+                }
                 Yii::$app->session->setFlash('success', 'Create Success!');
                 return $this->redirect(['index']);
             }else{
@@ -102,6 +105,9 @@ class AddressBookController extends Controller
             ];
             $model->setAttributes($attributes);
             if($model->save()){
+                if($model->is_default == 1){
+                    AddressBook::updateAll(['is_default' => 0], ['member_id' => $model->member_id, 'type' => $model->type]);
+                }
                 Yii::$app->session->setFlash('success', 'Update Success!');
                 return $this->redirect(['index']);
             }else{

@@ -38,6 +38,7 @@ $this->title = 'Change Password';
                     </div>
                     <div class="buttons-set">
                         <a onclick="javascript:history.back(-1)" class="btn btn-success">Back</a>
+                        <a href="/member/information" class="btn btn-success password">Change Information</a>
                         <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
                     </div>
                 <?php ActiveForm::end(); ?>

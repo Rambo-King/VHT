@@ -32,12 +32,14 @@ $this->title = 'Account Information ';
                     <div class="field">
                         <span class="legend">Account Information</span>
                         <div class="member-form form">
+                            <?= $form->field($model, 'email')->textInput(['disabled' => true]) ?>
                             <?= $form->field($model, 'account_number')->textInput(['maxlength' => true]) ?>
                             <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
                         </div>
                     </div>
                     <div class="buttons-set">
                         <a onclick="javascript:history.back(-1)" class="btn btn-success">Back</a>
+                        <a href="/member/password" class="btn btn-success password">Change Password</a>
                         <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
                     </div>
                 <?php ActiveForm::end(); ?>

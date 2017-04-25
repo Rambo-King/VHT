@@ -9,6 +9,39 @@ use yii\web\Controller;
 
 class BookController extends Controller{
 
+    public function actionModify($id){
+        $model = AddressBook::find()->where(['address_book_id' => $id])->one();
+        if ($model->load(Yii::$app->request->post())) {
+            $data = Yii::$app->request->post('AddressBook');
+            $library = AddressLibrary::find()->where(['Address_Library_Id' => $data['areas']])->one();
+            $mid = Yii::$app->user->identity->getId();
+            $attributes = [
+                'network_id' => $library->Network_Id,
+                'network_name' => Network::GetNameById($library->Network_Id),
+                'address_library_id' => $data['areas'],
+                'address' => AddressLibrary::AddressString($data['areas']),
+            ];
+            $model->setAttributes($attributes);
+            if($model->save()){
+                if($model->is_default == 1){
+                    AddressBook::updateAll(['is_default' => 0], ['member_id' => $mid, 'type' => $model->type]);
+                }
+                Yii::$app->session->setFlash('success', 'Update Success!');
+                return $this->redirect(['/member/book']);
+            }else{
+                print_r($model->getErrors()); exit;
+            }
+        } else {
+            $library = AddressLibrary::find()->where(['Address_Library_Id' => $model->address_library_id])->one();
+            $model->country = $library->Country;
+            $model->region1 = $library->Region1;
+            $model->areas = $library->Address_Library_Id;
+            return $this->render('modify', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     public function actionCreate(){
         $model = new AddressBook();
         if ($model->load(Yii::$app->request->post())) {
@@ -21,7 +54,6 @@ class BookController extends Controller{
                 'network_name' => Network::GetNameById($library->Network_Id),
                 'address_library_id' => $data['areas'],
                 'address' => AddressLibrary::AddressString($data['areas']),
-                'updated_by' => 2
             ];
             $model->setAttributes($attributes);
             if($model->save()){

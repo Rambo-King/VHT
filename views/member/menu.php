@@ -1,6 +1,7 @@
 <?php
-//$controller = Yii::$app->controller->id;
+$controller = Yii::$app->controller->id;
 $action = Yii::$app->controller->action->id;
+$do = $controller.'/'.$action;
 ?>
 
 <div class="navigation">
@@ -9,35 +10,28 @@ $action = Yii::$app->controller->action->id;
     </div>
     <div class="nav-contain">
         <div class="nav">
-            <?php if($action == 'account'): ?>
+            <?php if(in_array($do, ['member/account'])): ?>
                 <strong>Account Dashboard</strong>
             <?php else: ?>
                 <a href="/member/account"><span>Account Dashboard</span></a>
             <?php endif; ?>
         </div>
         <div class="nav">
-            <?php if($action == 'information'): ?>
+            <?php if(in_array($do, ['member/information', 'member/password'])): ?>
                 <strong>Account Information</strong>
             <?php else: ?>
                 <a href="/member/information"><span>Account Information</span></a>
             <?php endif; ?>
         </div>
         <div class="nav">
-            <?php if($action == 'password'): ?>
-                <strong>Change Password</strong>
-            <?php else: ?>
-                <a href="/member/password"><span>Change Password</span></a>
-            <?php endif; ?>
-        </div>
-        <div class="nav">
-            <?php if($action == 'book'): ?>
+            <?php if(in_array($do, ['member/book', 'book/create', 'book/modify'])): ?>
                 <strong>Address Book</strong>
             <?php else: ?>
                 <a href="/member/book"><span>Address Book</span></a>
             <?php endif; ?>
         </div>
         <div class="nav">
-            <?php if($action == 'order'): ?>
+            <?php if(in_array($do, ['member/order', 'order/view'])): ?>
                 <strong>My Orders</strong>
             <?php else: ?>
                 <a href="/member/order"><span>My Orders</span></a>
