@@ -53,7 +53,16 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
+            Yii::$app->admin->isGuest ? (['label' => 'Admin Login', 'url' => ['/admin/manager/login']]):
+                ('<li>'
+                    . Html::beginForm(['/admin/manager/logout'], 'post', ['class' => ''])
+                    . Html::submitButton(
+                        'Logout (' . Yii::$app->admin->identity->username . ')',
+                        ['class' => 'btn-link', 'style' => 'padding:13px 0;']
+                    )
+                    . Html::endForm()
+                    . '</li>')
         ],
     ]);
     NavBar::end();

@@ -46,7 +46,7 @@ class MemberLoginForm extends Model{
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Email/Account Number Or Password Wrong!');
+                $this->addError($attribute, 'Email / Account Number Or Password Wrong!');
             }
         }
     }

@@ -35,6 +35,14 @@ $config = [
             'idParam' => '_memberId',
             'loginUrl' => ['member/login'],
         ],
+        'admin' => [
+            'class' => 'yii\web\User',
+            'identityClass' => 'app\modules\admin\models\Manager',
+            'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_managerIdentity', 'httpOnly' => true],
+            'idParam' => '_managerId',
+            'loginUrl' => ['admin/manager/login'],
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

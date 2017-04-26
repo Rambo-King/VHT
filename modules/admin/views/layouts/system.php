@@ -38,36 +38,28 @@ $action = Yii::$app->controller->action->id;
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="glyphicon glyphicon-user"></i>
-                <span>Jane Doe <i class="caret"></i></span>
+                <span><?= Yii::$app->admin->identity->account_name ?> <i class="caret"></i></span>
             </a>
             <ul class="dropdown-menu">
-                <!-- User image -->
                 <li class="user-header bg-light-blue">
                     <img src="/system/image/avatar3.png" class="img-circle" alt="User Image" />
                     <p>
-                        Jane Doe - Web Developer
-                        <small>Member since Nov. 2012</small>
+                        <?= Yii::$app->admin->identity->account_name ?> - Web Developer
+                        <small>Member since Apr. 2017</small>
                     </p>
                 </li>
-                <!-- Menu Body -->
-                <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                        <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                        <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                        <a href="#">Friends</a>
-                    </div>
-                </li>
-                <!-- Menu Footer-->
                 <li class="user-footer">
                     <div class="pull-left">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                        <a href="/admin/manager/view/<?= Yii::$app->admin->getId() ?>" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                        <?= Html::beginForm(['/admin/manager/logout'], 'post', ['class' => ''])
+                        . Html::submitButton(
+                        'Logout (' . Yii::$app->admin->identity->username . ')',
+                        ['class' => 'btn btn-default btn-flat',]
+                        )
+                        . Html::endForm()
+                        ?>
                     </div>
                 </li>
             </ul>
@@ -87,7 +79,7 @@ $action = Yii::$app->controller->action->id;
                         <img src="/system/image/avatar3.png" class="img-circle" alt="User Image" />
                     </div>
                     <div class="pull-left info">
-                        <p>Hello, Jane</p>
+                        <p>Hello, <?= Yii::$app->admin->identity->account_name ?></p>
 
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
@@ -99,6 +91,15 @@ $action = Yii::$app->controller->action->id;
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             <small class="badge pull-right bg-yellow">Dashboard</small>
                         </a>
+                    </li>
+
+                    <li class="treeview <?= in_array($controller, ['manager']) ? 'active' : '' ?>">
+                        <a href="#">
+                            <i class="fa fa-group"></i> <span>Manager</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li <?= $controller=='manager' ? 'class="active"' : '' ?>><a href="<?= \yii\helpers\Url::to(['/admin/manager'])?>"><i class="fa fa-angle-double-right"></i> Manager</a></li>
+                        </ul>
                     </li>
 
                     <li>

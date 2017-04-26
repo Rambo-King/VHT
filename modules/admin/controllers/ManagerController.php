@@ -2,9 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
+use app\modules\admin\models\ManagerLoginForm;
 use Yii;
-use app\models\Member;
-use app\models\MemberSearch;
+use app\modules\admin\models\Manager;
+use app\modules\admin\models\ManagerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,9 +13,9 @@ use yii\web\Response;
 use yii\widgets\ActiveForm;
 
 /**
- * MemberController implements the CRUD actions for Member model.
+ * ManagerController implements the CRUD actions for Manager model.
  */
-class MemberController extends Controller
+class ManagerController extends Controller
 {
     /**
      * @inheritdoc
@@ -27,9 +28,14 @@ class MemberController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'password', 'ajax-delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'ajax-delete', 'password', 'logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['login', 'captcha'],
+                        'allow' => true,
+                        'roles' => ['?'],
                     ],
                 ],
             ],
@@ -43,12 +49,12 @@ class MemberController extends Controller
     }
 
     /**
-     * Lists all Member models.
+     * Lists all Manager models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MemberSearch();
+        $searchModel = new ManagerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,29 +64,35 @@ class MemberController extends Controller
     }
 
     /**
-     * Creates a new Member model.
+     * Displays a single Manager model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Manager model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate(){
-        $model = new Member();
-        $model->scenarios('add');
+    public function actionCreate()
+    {
+        $model = new Manager();
+        $model->setScenario('add');
 
         if((Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->created_by = 1;
-            $model->account_number = $model->account_number == '' ? null : $model->account_number;
-            $model->password = $model->password2 = Yii::$app->security->generatePasswordHash($model->password);
-            if($model->save()){
-                Yii::$app->session->setFlash('success', 'Create Success!');
-                return $this->redirect(['index']);
-            }else{
-                print_r($model->getErrors()); exit;
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->Add()) {
+            Yii::$app->session->setFlash('success', 'Create Success!');
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -89,7 +101,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Updates an existing Member model.
+     * Updates an existing Manager model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,20 +109,15 @@ class MemberController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->setScenario('update');
-
-        if((Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()))){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
+        $model->setScenario('modify');
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->updated_by = 2;
+            $model->updated_by = 3;
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'Update Success!');
                 return $this->redirect(['index']);
             }else{
-                print_r($model->getErrors()); exit();
+                print_r($model->getErrors()); exit;
             }
         } else {
             return $this->render('update', [
@@ -120,19 +127,40 @@ class MemberController extends Controller
     }
 
     /**
-     * Finds the Member model based on its primary key value.
+     * Deletes an existing Manager model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the Manager model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Member the loaded model
+     * @return Manager the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Member::findOne($id)) !== null) {
+        if (($model = Manager::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionAjaxDelete(){
+        $id = Yii::$app->request->post('id');
+        $model = $this->findModel($id);
+        $model->delete();
+        Yii::$app->session->setFlash('success', 'Delete Success!');
+        exit(true);
     }
 
     public function actionPassword($id){
@@ -140,7 +168,7 @@ class MemberController extends Controller
         $model->setScenario('change');
 
         if($model->load(Yii::$app->request->post())){
-            $data = Yii::$app->request->post('Member');
+            $data = Yii::$app->request->post('Manager');
             $model->password = Yii::$app->security->generatePasswordHash($data['password3']);
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'Password Changed Success!');
@@ -155,12 +183,41 @@ class MemberController extends Controller
         }
     }
 
-    public function actionAjaxDelete(){
-        $id = Yii::$app->request->post('id');
-        $model = $this->findModel($id);
-        $model->delete();
-        Yii::$app->session->setFlash('success', 'Delete Success!');
-        exit(true);
+    public function actions(){
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'width' => 130,
+                'height' => 50,
+                'backColor' => 0xafdfe4,
+                'foreColor' => 0x000000,
+                'minLength' => 4,
+                'maxLength' => 4,
+                'offset' => 8,
+            ],
+        ];
+    }
+
+    public function actionLogin(){
+        /*if(!Yii::$app->admin->isGuest){
+            return $this->redirect('/admin');
+        }*/
+        $this->layout = 'login';
+        $model = new ManagerLoginForm();
+
+        if($model->load(Yii::$app->request->post()) && $model->login()){
+            return $this->redirect('/admin');
+        }else{
+            return $this->render('login', ['model' => $model]);
+        }
+    }
+
+    public function actionLogout(){
+        Yii::$app->admin->logout(false);
+        return $this->redirect('/admin/manager/login');
     }
 
 }

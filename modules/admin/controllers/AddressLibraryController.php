@@ -20,6 +20,17 @@ class AddressLibraryController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'user' => 'admin',
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

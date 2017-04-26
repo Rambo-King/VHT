@@ -22,6 +22,17 @@ class NetworkAreaController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'user' => 'admin',
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'batch-create', 'get-region', 'get-code', 'ajax-delete', 'batch-delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

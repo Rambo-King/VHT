@@ -20,6 +20,17 @@ class OrderController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'user' => 'admin',
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

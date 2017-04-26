@@ -22,6 +22,17 @@ class NetworkController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'user' => 'admin',
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'get-region', 'get-code', 'ajax-delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

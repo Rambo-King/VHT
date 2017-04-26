@@ -22,6 +22,17 @@ class AddressBookController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'user' => 'admin',
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete', 'get-region', 'get-code', 'ajax-delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
