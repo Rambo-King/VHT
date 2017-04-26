@@ -112,7 +112,6 @@ class ManagerController extends Controller
         $model->setScenario('modify');
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->updated_by = 3;
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'Update Success!');
                 return $this->redirect(['index']);

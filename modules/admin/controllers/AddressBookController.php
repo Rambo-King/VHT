@@ -74,7 +74,7 @@ class AddressBookController extends Controller
                 'network_name' => Network::GetNameById($library->Network_Id),
                 'address_library_id' => $data['areas'],
                 'address' => AddressLibrary::AddressString($data['areas']),
-                'created_by' => 1
+                'created_by' => Yii::$app->admin->getId(),
             ];
             $model->setAttributes($attributes);
             if($model->save()){
@@ -112,7 +112,7 @@ class AddressBookController extends Controller
                 'network_name' => Network::GetNameById($library->Network_Id),
                 'address_library_id' => $data['areas'],
                 'address' => AddressLibrary::AddressString($data['areas']),
-                'updated_by' => 2
+                'updated_by' => Yii::$app->admin->getId(),
             ];
             $model->setAttributes($attributes);
             if($model->save()){

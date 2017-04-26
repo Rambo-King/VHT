@@ -44,8 +44,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'account_name',
             'created_at:datetime',
             'updated_at:datetime',
-            'created_by',
-            'updated_by',
+            [
+                'attribute' => 'created_by',
+                'filter' => \app\modules\admin\models\Manager::ManagerList(),
+                'value' => function($m){
+                        return \app\modules\admin\models\Manager::GetAccountName($m->created_by);
+                    }
+            ],
+            [
+                'attribute' => 'updated_by',
+                'filter' => \app\modules\admin\models\Manager::ManagerList(),
+                'value' => function($m){
+                        return \app\modules\admin\models\Manager::GetAccountName($m->updated_by);
+                    }
+            ],
 
             [
                 'class' => 'yii\grid\ActionColumn',

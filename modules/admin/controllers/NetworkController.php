@@ -66,7 +66,7 @@ class NetworkController extends Controller
         $model->setScenario('create');
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->created_by = 1; //Yii session data
+            $model->created_by = Yii::$app->admin->getId();
             if($model->save()){
                 $networkAreaModel = new NetworkArea();
                 $networkAreaModel->country = $networkAreaModel->region1 = $networkAreaModel->areas = 0;
@@ -78,7 +78,7 @@ class NetworkController extends Controller
                         'network_name' => $model->name,
                         'address_library_id' => $aid,
                         'address' => AddressLibrary::AddressString($aid),
-                        'created_by' => 1, //Yii session data
+                        'created_by' => Yii::$app->admin->getId(),
                     ];
                     $naModel->setAttributes($attributes);
                     if($naModel->save()){
@@ -112,7 +112,7 @@ class NetworkController extends Controller
         $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->updated_by = 2;
+            $model->updated_by = Yii::$app->admin->getId();
             if($model->save())
                 return $this->redirect(['index']);
             else{

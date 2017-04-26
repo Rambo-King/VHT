@@ -72,7 +72,7 @@ class MemberController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->created_by = 1;
+            $model->created_by = Yii::$app->admin->getId();
             $model->account_number = $model->account_number == '' ? null : $model->account_number;
             $model->password = $model->password2 = Yii::$app->security->generatePasswordHash($model->password);
             if($model->save()){
@@ -105,7 +105,7 @@ class MemberController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->updated_by = 2;
+            $model->updated_by = Yii::$app->admin->getId();
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'Update Success!');
                 return $this->redirect(['index']);

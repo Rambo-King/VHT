@@ -4,6 +4,7 @@ namespace app\modules\admin\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -189,6 +190,18 @@ class Manager extends ActiveRecord implements IdentityInterface
     public static function GetRole($id){
         $roles = self::Roles();
         return $roles[$id];
+    }
+
+    public static function ManagerList(){
+        $rows = self::find()->all();
+        return ArrayHelper::map($rows, 'manager_id', 'account_name');
+    }
+
+    public static function GetAccountName($id){
+        if(is_null($id)) return null;
+        if($id == 0) return 'SELF';
+        $row = self::find()->where(['manager_id' => $id])->one();
+        return $row ? $row->account_name : null;
     }
 
 }

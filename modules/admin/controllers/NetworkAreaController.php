@@ -76,7 +76,7 @@ class NetworkAreaController extends Controller
                 'network_name' => Network::GetNameById($model->network_id),
                 'address_library_id' => $data['areas'],
                 'address' => AddressLibrary::AddressString($data['areas']),
-                'created_by' => 1, //Yii session data
+                'created_by' => Yii::$app->admin->getId(),
             ];
             $model->setAttributes($attributes);
             if($model->save()){
@@ -108,7 +108,7 @@ class NetworkAreaController extends Controller
                     'network_name' => Network::GetNameById($model->network_id),
                     'address_library_id' => $aid,
                     'address' => AddressLibrary::AddressString($aid),
-                    'created_by' => 1, //Yii session data
+                    'created_by' => Yii::$app->admin->getId(),
                 ];
                 $naModel->setAttributes($attributes);
                 if($naModel->save()){
@@ -139,7 +139,7 @@ class NetworkAreaController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->network_name = Network::GetNameById($model->network_id);
-            $model->updated_by = 2;
+            $model->updated_by = Yii::$app->admin->getId();
             if($model->save()){
                 $m = AddressLibrary::find()->where(['Address_Library_Id' => $model->address_library_id])->one();
                 $m->Network_Id = $model->network_id;

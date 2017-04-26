@@ -65,7 +65,7 @@ class UnitController extends Controller
         $model = new Unit();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->created_by = 1; //yii session data
+            $model->created_by = Yii::$app->admin->getId();
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'Create Success!');
                 return $this->redirect(['index']);
@@ -90,7 +90,7 @@ class UnitController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->updated_by = 2; //yii session data
+            $model->updated_by = Yii::$app->admin->getId(); //yii session data
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'Update Success!');
                 return $this->redirect(['index']);
