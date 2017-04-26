@@ -4,11 +4,16 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'timeZone'=>'Asia/Chongqing',
-    'language' =>'en', //zh-CN
+    'language' =>'en',
     'id' => 'vht',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     //'defaultRoute' => 'member',
+    /*'controllerMap' => [
+        'api' => [
+            'class' => 'app\api\ApiController'
+        ]
+    ],*/
     'components' => [
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -18,6 +23,15 @@ $config = [
                 '<controller:[-\w]+>/<action:[-\w]+>' => '<controller>/<action>',
                 '<module:[\w]+>/<controller:[-\w]+>/<action:[-\w]+>/<id:\d+>' => '<module>/<controller>/<action>',
                 '<module:[\w]+>/<controller:[-\w]+>/<action:[-\w]+>' => '<module>/<controller>/<action>',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => ['api/unit', 'api/network'],
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET api/unit/test' => 'api/unit/test',
+                        'GET api/network/test1' => 'api/network/test1',
+                    ]
+                ],
             ],
         ],
         'request' => [
@@ -72,6 +86,9 @@ $config = [
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
+        ],
+        'api' => [
+            'class' => 'app\modules\api\Api',
         ],
     ],
 ];
