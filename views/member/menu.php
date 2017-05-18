@@ -17,6 +17,13 @@ $do = $controller.'/'.$action;
             <?php endif; ?>
         </div>
         <div class="nav">
+            <?php if(in_array($do, ['order/quick'])): ?>
+                <strong>Order Quick</strong>
+            <?php else: ?>
+                <a href="/order/quick"><span>Order Quick</span></a>
+            <?php endif; ?>
+        </div>
+        <div class="nav">
             <?php if(in_array($do, ['member/information', 'member/password'])): ?>
                 <strong>Account Information</strong>
             <?php else: ?>

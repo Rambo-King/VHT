@@ -1,39 +1,58 @@
 <?php
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+//use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 $this->title = 'Member Login';
 ?>
 
-<div class="member-login">
+<div class="site-login">
+    <div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="member-login-form">
-
-        <?php $form = ActiveForm::begin([
-            'options' => [
-                'class'=>'form-horizontal',
-                'enctype' => 'multipart/form-data',
-            ],
-            'fieldConfig' => [
-                'template' => '{label}<div class="col-xs-6">{input}</div><div class="col-xs-4">{error}</div>',
-                'labelOptions' => ['class' => 'col-xs-2 control-label'],
-            ],
-        ]); ?>
-
-        <?= $form->field($model, 'email')->textInput() ?>
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-        <div class="form-group">
-            <div class="col-xs-2 col-xs-offset-2">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-success']) ?>
-                <?= Html::a('Register', ['register'], ['class' => 'btn btn-success']) ?>
-            </div>
+        <div class="jumbotron">
+            <h2><?= Html::encode($this->title) ?></h2>
         </div>
 
-        <?php ActiveForm::end(); ?>
+        <div class="login-form center-block">
+            <?php $form = ActiveForm::begin([
+                'id' => 'login-form',
+                'layout' => 'horizontal',
+                'fieldConfig' => [
+                    'template' => "{beginWrapper}\n{input}\n{endWrapper}",
+                    'horizontalCssClasses' => [
+                        'wrapper' => 'col-sm-12',
+                        'offset' => '',
+                    ],
+                ],
+                'errorCssClass' => '',
+                'successCssClass' => 'has-success',
+            ]); ?>
+
+            <?= $form->errorSummary($model, ['header' => '']) ?>
+
+            <?= $form->field($model, 'email')->textInput(['placeholder' => 'Email / Account Number', 'autocomplete' => 'off']) ?>
+
+            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password']) ?>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-success btn-lg btn-block', 'name' => 'login-button']) ?>
+                    <?= Html::a('Register', ['register'], ['class' => 'btn btn-success btn-lg btn-block']) ?>
+                </div>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+        </div>
 
     </div>
-
 </div>
+
+<?php
+$this->registerCssFile('css/login.css', ['depends' => 'app\assets\AppAsset']);
+$script = <<<JS
+    $('#memberloginform-email').focus(function(){
+        $('#memberloginform-password').val('');
+    });
+JS;
+$this->registerJs($script);
+?>

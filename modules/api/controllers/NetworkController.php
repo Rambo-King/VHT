@@ -5,7 +5,7 @@ use yii\web\Response;
 
 class NetworkController extends ActiveController{
 
-    public $modelClass = 'app\models\Unit';
+    public $modelClass = 'app\modules\admin\models\Network';
 
     public function behaviors(){
         $behaviors = parent::behaviors();
